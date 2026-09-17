@@ -23,8 +23,11 @@ class AuthRemoteDatasourceImp extends AuthRemoteDatasource {
 
   @override
   Future<void> logout() async {
-    await ApiClient.post(endpoint: ApiConst.logout);
-    await SecureStorageHelper.delete(key: AppConst.accessTokenKey);
+    try {
+      await ApiClient.post(endpoint: ApiConst.logout);
+    } finally {
+      await SecureStorageHelper.delete(key: AppConst.accessTokenKey);
+    }
   }
 
   @override

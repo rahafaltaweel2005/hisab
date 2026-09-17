@@ -10,8 +10,8 @@ class RegisterUseCase {
     required String displayName,
     required String email,
     required String password,
-  }) async {
-    return await authRepository.register(
+  }){
+    return authRepository.register(
       displayName: displayName,
       email: email,
       password: password,
