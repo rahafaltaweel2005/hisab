@@ -50,14 +50,17 @@ class ApiClient {
       ),
     );
 
-    _dio.interceptors.add(
-      LogInterceptor(
-        request: true,
-        requestBody: true,
-        responseBody: true,
-        error: true,
-      ),
-    );
+    assert(() {
+      _dio.interceptors.add(
+        LogInterceptor(
+          request: true,
+          requestBody: true,
+          responseBody: true,
+          error: true,
+        ),
+      );
+      return true;
+    }());
   }
 
   static Future<Response> get({
