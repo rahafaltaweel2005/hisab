@@ -43,6 +43,6 @@ class ColorConst {
 
   static const Color error = Color(0xFFD32F2F);
   static const Color positive = Color(0xFF2E7D6B);
-  static const Color negative = Color(0xFFD32F2F);
+  static const Color negative = Color(0xFFF4D0CD);
   static const Color warning = Color(0xFFE0A030);
 }
