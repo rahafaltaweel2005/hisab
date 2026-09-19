@@ -7,18 +7,18 @@ import 'package:hiasb_app/core/constant/svg_const.dart';
 import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/register/state/register_state.dart';
 import '../../../../../core/textfield/hiasb_text_field.dart';
-import '../../../../profile/presentation/view/profile_screen.dart';
-import '../../login/cubit/login_cubit.dart';
-import '../../login/state/login_state.dart';
+import '../../../profile/presentation/view/profile_screen.dart';
+import '../login/cubit/login_cubit.dart';
+import '../login/state/login_state.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   final PageController controller = PageController();
   final TextEditingController displayNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: SvgPicture.asset(SvgConst.logo),
               ),
               Text(
-                "Hiasb".tr(),
+                "hiasb".tr(),
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w900,
@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Text(
-                "Financial Project Management".tr(),
+                "financial project management".tr(),
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : ColorConst.surfaceLight,
                         ),
                         child: Text(
-                          "Register".tr(),
+                          "register".tr(),
                           style: TextStyle(
                             color: ColorConst.textDark,
                             fontWeight: FontWeight.w600,
@@ -145,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : ColorConst.surfaceLight,
                         ),
                         child: Text(
-                          "Login".tr(),
+                          "login".tr(),
                           style: TextStyle(
                             color: ColorConst.textDark,
                             fontWeight: FontWeight.w600,
@@ -180,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             HiasbTextField(
                               controller: displayNameController,
-                              title: 'Full Name'.tr(),
+                              title: 'full name'.tr(),
                               hint: 'Mohammad'.tr(),
                               prefixIcon: Icon(
                                 Icons.person_2_outlined,
@@ -192,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: size.height * 0.01),
                             HiasbTextField(
                               controller: emailController,
-                              title: 'Email'.tr(),
+                              title: 'email'.tr(),
                               hint: 'name@company.com'.tr(),
                               prefixIcon: Icon(
                                 Icons.email_outlined,
@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: size.height * 0.01),
                             HiasbTextField(
                               controller: passwordController,
-                              title: 'Password'.tr(),
+                              title: 'password'.tr(),
                               hint: '.....',
                               prefixIcon: TextButton(
                                 onPressed: () {
@@ -238,7 +238,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Create account'.tr()),
+                                  Text('create account'.tr()),
                                   SizedBox(width: size.width * 0.01),
                                   Icon(Icons.check_circle_outlined),
                                 ],
@@ -267,7 +267,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             HiasbTextField(
                               controller: emailController,
-                              title: 'Email'.tr(),
+                              title: 'email'.tr(),
                               hint: 'name@company.com'.tr(),
                               prefixIcon: Icon(
                                 Icons.email_outlined,
@@ -279,7 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: size.height * 0.01),
                             HiasbTextField(
                               controller: passwordController,
-                              title: 'Password'.tr(),
+                              title: 'password'.tr(),
                               hint: '.....',
                               prefixIcon: TextButton(
                                 onPressed: () {

@@ -1,6 +1,7 @@
 
-import '../models/login_response_model.dart';
-import '../models/register_response_model.dart';
+
+import '../model/login_response_model.dart';
+import '../model/register_response_model.dart';
 
 abstract class AuthRemoteDatasource {
 

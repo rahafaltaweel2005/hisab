@@ -1,7 +1,8 @@
 import 'package:hiasb_app/core/constant/api_const.dart';
 import 'package:hiasb_app/core/network/api_client.dart';
-import 'package:hiasb_app/features/profile/data/datasources/profile_remote_data_source.dart';
-import 'package:hiasb_app/features/profile/data/model/profile_model.dart';
+import 'package:hiasb_app/features/profile/data/datasource/profile_remote_data_source.dart';
+
+import '../models/profile_model.dart';
 
 class ProfileRemoteDataSourceImp extends ProfileRemoteDataSource {
   @override

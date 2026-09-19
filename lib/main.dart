@@ -1,19 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hiasb_app/features/auth/data/datasource/auth_remote_datasource_imp.dart';
+import 'package:hiasb_app/features/auth/data/datasource/auth_remote_datasource_impl.dart';
 import 'package:hiasb_app/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:hiasb_app/features/auth/domain/usecase/login_use_case.dart';
 import 'package:hiasb_app/features/auth/presentation/login/cubit/login_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/logout/cubit/logout_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cubit.dart';
-import 'package:hiasb_app/features/auth/presentation/register/view/register_screen.dart';
 
 import 'core/app_setting/theme/app_theme.dart';
 import 'core/network/api_client.dart';
 import 'features/auth/domain/usecase/logout_use_case.dart';
 import 'features/auth/domain/usecase/register_use_case.dart';
-import 'features/profile/data/datasources/profile_remote_data_source_imp.dart';
+import 'features/auth/presentation/view/auth_screen.dart';
+import 'features/profile/data/datasource/profile_remote_data_source_impl.dart';
 import 'features/profile/data/repository/profile_repository_imp.dart';
 import 'features/profile/domain/usecase/get_profile_use_case.dart';
 import 'features/profile/presentation/cubit/profile_cubit.dart';
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
 
-      home: RegisterScreen(),
+      home: AuthScreen(),
     );
   }
 }

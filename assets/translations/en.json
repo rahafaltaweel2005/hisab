@@ -1,12 +1,16 @@
 {
-  "Hiasb": "Hiasb",
-  "Financial Project Management": "Financial Project Management",
-  "Register": "Register",
-  "Login": "Login",
-  "Full Name": "Full Name",
+  "hiasb": "Hiasb",
+  "financial project management": "Financial Project Management",
+  "register": "Register",
+  "login": "Login",
+  "full name": "Full Name",
   "Mohammad": "Mohammad",
-  "Email": "Email",
+  "email": "Email",
   "name@company.com": "name@company.com",
-  "Password": "Password",
-  "Create account": "Create account"
+  "password": "Password",
+  "create account": "Create account",
+  "profile": "Profile",
+  "logout": "Logout",
+  "id": "المعرّف",
+  "no data": "لا توجد بيانات"
 }

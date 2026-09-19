@@ -2,10 +2,8 @@ import 'package:hiasb_app/core/constant/api_const.dart';
 import 'package:hiasb_app/core/constant/app_const.dart';
 import 'package:hiasb_app/core/network/api_client.dart';
 import 'package:hiasb_app/core/storage/secure_storage_helper.dart';
-import 'package:hiasb_app/features/auth/data/models/login_response_model.dart';
-
-import 'package:hiasb_app/features/auth/data/models/register_response_model.dart';
-
+import '../model/login_response_model.dart';
+import '../model/register_response_model.dart';
 import 'auth_remote_datasource.dart';
 
 class AuthRemoteDatasourceImp extends AuthRemoteDatasource {

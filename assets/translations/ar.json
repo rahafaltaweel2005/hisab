@@ -1,12 +1,16 @@
 {
-  "Hiasb": "حساب",
-  "Financial Project Management": "إدارة المشاريع المالية",
-  "Register": "إنشاء حساب",
-  "Login": "تسجيل الدخول",
-  "Full Name": "الاسم الكامل",
+  "hiasb": "حساب",
+  "financial project management": "إدارة المشاريع المالية",
+  "register": "إنشاء حساب",
+  "login": "تسجيل الدخول",
+  "full name": "الاسم الكامل",
   "Mohammad": "محمد",
-  "Email": "البريد الإلكتروني",
+  "email": "البريد الإلكتروني",
   "name@company.com": "name@company.com",
-  "Password": "كلمة المرور",
-  "Create account": "إنشاء الحساب"
+  "password": "كلمة المرور",
+  "create account": "إنشاء الحساب",
+  "profile": "الملف الشخصي",
+  "logout": "تسجيل الخروج",
+  "id": "ID",
+  "no data": "No Data"
 }

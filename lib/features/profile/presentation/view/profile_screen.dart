@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiasb_app/core/constant/svg_const.dart';
-import 'package:hiasb_app/features/auth/presentation/register/view/register_screen.dart';
 
 import '../../../../core/constant/color_const.dart';
 import '../../../auth/presentation/logout/cubit/logout_cubit.dart';
 import '../../../auth/presentation/logout/state/logout_state.dart';
+import '../../../auth/presentation/view/auth_screen.dart';
 import '../cubit/profile_cubit.dart';
 import '../state/profile_state.dart';
 
@@ -38,9 +38,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hisab'.tr()),
+            Text('hiasb'.tr()),
             Text(
-              "Financial Project Management".tr(),
+              "financial project management".tr(),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is LogoutSuccessState) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => RegisterScreen()),
+              MaterialPageRoute(builder: (context) => AuthScreen()),
             );
           }
           if (state is LogoutErrorState) {
@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               spacing: 7,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Id'.tr()),
+                                Text('id'.tr()),
                                 Text(
                                   state.user.id,
                                   maxLines: 2,
@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             spacing: 7,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Name'.tr()),
+                              Text('name'.tr()),
                               Text(
                                 state.user.displayName,
                                 style: TextStyle(
@@ -184,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             spacing: 7,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Email'.tr()),
+                              Text('email'.tr()),
                               Text(
                                 state.user.email,
                                 style: TextStyle(
@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Logout'.tr(),
+                            'logout'.tr(),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             } else if (state is ProfileErrorState) {
               return Center(child: Text(state.message));
             } else {
-              return Center(child: Text('No Data'));
+              return Center(child: Text('no data'));
             }
           },
         ),
