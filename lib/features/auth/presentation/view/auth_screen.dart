@@ -7,7 +7,7 @@ import 'package:hiasb_app/core/constant/svg_const.dart';
 import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/register/state/register_state.dart';
 import '../../../../../core/textfield/hiasb_text_field.dart';
-import '../../../profile/presentation/view/profile_screen.dart';
+import '../../../home/presentation/view/home_screen.dart';
 import '../login/cubit/login_cubit.dart';
 import '../login/state/login_state.dart';
 
@@ -256,7 +256,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         if (state is RegisterSuccessState) {
                           Navigator.pushReplacement(
                               context, MaterialPageRoute(builder: (context) =>
-                              ProfileScreen(),));
+                              HomeScreen(),));
                         }
                       },
                     ),
@@ -330,7 +330,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         if (state is LoginSuccessState) {
                           Navigator.pushReplacement(
                               context, MaterialPageRoute(builder: (context) =>
-                              ProfileScreen(),));
+                              HomeScreen(),));
                         }
                       },
                     ),
