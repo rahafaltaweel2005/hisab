@@ -51,7 +51,7 @@ class ProjectRemoteDatasourceImpl extends ProjectRemoteDatasource {
       queryParameters: {
         'pageNumber': pageNumber,
         'pageSize': pageSize,
-        if (search != null && search.isNotEmpty) 'search': search,
+        if (search != null && search.trim().isNotEmpty) 'search': search.trim(),
       },
     );
     return ListProjectsModel.fromJson(response.data);

@@ -19,11 +19,7 @@ import 'features/profile/data/repository/profile_repository_imp.dart';
 import 'features/profile/domain/usecase/get_profile_use_case.dart';
 import 'features/profile/presentation/cubit/profile_cubit.dart';
 import 'features/projects/data/datasource/project_remote_datasource_impl.dart';
-import 'features/projects/domain/usecase/add_project_use_case.dart';
-import 'features/projects/domain/usecase/delete_project_use_case.dart';
-import 'features/projects/domain/usecase/get_project_by_id_use_case.dart';
 import 'features/projects/domain/usecase/get_projects_use_case.dart';
-import 'features/projects/domain/usecase/update_project_use_case.dart';
 import 'features/projects/presentation/getprojects/cubit/get_projects_cubit.dart';
 
 void main() {
@@ -59,18 +55,18 @@ void main() {
   final getProjectsUseCase = GetProjectsUseCase(
     projectRepository: projectRepository,
   );
-  final addProjectUseCase = AddProjectUseCase(
-    projectRepository: projectRepository,
-  );
-  final updateProjectUseCase = UpdateProjectUseCase(
-    projectRepository: projectRepository,
-  );
-  final getProjectByIdUseCase = GetProjectByIdUseCase(
-    projectRepository: projectRepository,
-  );
-  final deleteProjectUseCase = DeleteProjectUseCase(
-    projectRepository: projectRepository,
-  );
+  // final addProjectUseCase = AddProjectUseCase(
+  //   projectRepository: projectRepository,
+  // );
+  // final updateProjectUseCase = UpdateProjectUseCase(
+  //   projectRepository: projectRepository,
+  // );
+  // final getProjectByIdUseCase = GetProjectByIdUseCase(
+  //   projectRepository: projectRepository,
+  // );
+  // final deleteProjectUseCase = DeleteProjectUseCase(
+  //   projectRepository: projectRepository,
+  // );
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],

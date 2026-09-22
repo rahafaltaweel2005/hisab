@@ -21,13 +21,16 @@ class ListProjectsModel {
   ListProjectsModel.fromJson(Map<String, dynamic> json) {
     if (json['projects'] != null) {
       projects = <Projects>[];
+
       json['projects'].forEach((v) {
-        projects!.add(new Projects.fromJson(v));
+        projects!.add(Projects.fromJson(v));
       });
     }
+
     totals = json['totals'] != null
-        ? new Totals.fromJson(json['totals'])
+        ? Totals.fromJson(json['totals'])
         : null;
+
     pageNumber = json['pageNumber'];
     pageSize = json['pageSize'];
     totalCount = json['totalCount'];
@@ -35,45 +38,52 @@ class ListProjectsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.projects != null) {
-      data['projects'] = this.projects!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = {};
+
+    if (projects != null) {
+      data['projects'] =
+          projects!.map((v) => v.toJson()).toList();
     }
-    if (this.totals != null) {
-      data['totals'] = this.totals!.toJson();
+
+    if (totals != null) {
+      data['totals'] = totals!.toJson();
     }
-    data['pageNumber'] = this.pageNumber;
-    data['pageSize'] = this.pageSize;
-    data['totalCount'] = this.totalCount;
-    data['totalPages'] = this.totalPages;
+
+    data['pageNumber'] = pageNumber;
+    data['pageSize'] = pageSize;
+    data['totalCount'] = totalCount;
+    data['totalPages'] = totalPages;
+
     return data;
   }
+
   ProjectListEntity toEntity() {
     return ProjectListEntity(
       pageNumber: pageNumber!,
       pageSize: pageSize!,
-      totalPaidAmount: totals!.totalPaidAmount!.toDouble(),
-      totalReceivedAmount: totals!.totalReceivedAmount!.toDouble(),
-      totalBalance: totals!.totalBalance!.toDouble(),
-      totalWalletAmount: totals!.totalWalletAmount!.toDouble(),
-      totalRemainingAmount: totals!.totalRemainingAmount!.toDouble(),
+      totalPaidAmount: totals!.totalPaidAmount!,
+      totalReceivedAmount: totals!.totalReceivedAmount!,
+      totalBalance: totals!.totalBalance!,
+      totalWalletAmount: totals!.totalWalletAmount!,
+      totalRemainingAmount: totals!.totalRemainingAmount!,
       totalCount: totalCount!,
       totalPages: totalPages!,
       projects: projects!.map((e) => e.toEntity()).toList(),
     );
   }
-
 }
 
 class Projects {
   int? projectId;
   int? projectNumber;
   String? description;
-  int? paidAmount;
-  int? receivedAmount;
-  int? balance;
-  int? walletAmount;
-  int? remainingAmount;
+
+  double? paidAmount;
+  double? receivedAmount;
+  double? balance;
+  double? walletAmount;
+  double? remainingAmount;
+
   String? createdAt;
   String? updatedAt;
 
@@ -94,39 +104,45 @@ class Projects {
     projectId = json['projectId'];
     projectNumber = json['projectNumber'];
     description = json['description'];
-    paidAmount = json['paidAmount'];
-    receivedAmount = json['receivedAmount'];
-    balance = json['balance'];
-    walletAmount = json['walletAmount'];
-    remainingAmount = json['remainingAmount'];
+
+    paidAmount = (json['paidAmount'] as num?)?.toDouble();
+    receivedAmount = (json['receivedAmount'] as num?)?.toDouble();
+    balance = (json['balance'] as num?)?.toDouble();
+    walletAmount = (json['walletAmount'] as num?)?.toDouble();
+    remainingAmount =
+        (json['remainingAmount'] as num?)?.toDouble();
+
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['projectId'] = this.projectId;
-    data['projectNumber'] = this.projectNumber;
-    data['description'] = this.description;
-    data['paidAmount'] = this.paidAmount;
-    data['receivedAmount'] = this.receivedAmount;
-    data['balance'] = this.balance;
-    data['walletAmount'] = this.walletAmount;
-    data['remainingAmount'] = this.remainingAmount;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = {};
+
+    data['projectId'] = projectId;
+    data['projectNumber'] = projectNumber;
+    data['description'] = description;
+    data['paidAmount'] = paidAmount;
+    data['receivedAmount'] = receivedAmount;
+    data['balance'] = balance;
+    data['walletAmount'] = walletAmount;
+    data['remainingAmount'] = remainingAmount;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+
     return data;
   }
+
   ProjectEntity toEntity() {
     return ProjectEntity(
       projectId: projectId!,
       projectNumber: projectNumber!,
       description: description!,
-      paidAmount: paidAmount!.toDouble(),
-      receivedAmount: receivedAmount!.toDouble(),
-      walletAmount: walletAmount!.toDouble(),
-      balance: balance!.toDouble(),
-      remainingAmount: remainingAmount!.toDouble(),
+      paidAmount: paidAmount!,
+      receivedAmount: receivedAmount!,
+      walletAmount: walletAmount!,
+      balance: balance!,
+      remainingAmount: remainingAmount!,
       createdAt: DateTime.parse(createdAt!),
       updatedAt: DateTime.parse(updatedAt!),
     );
@@ -134,11 +150,11 @@ class Projects {
 }
 
 class Totals {
-  int? totalPaidAmount;
-  int? totalReceivedAmount;
-  int? totalBalance;
-  int? totalWalletAmount;
-  int? totalRemainingAmount;
+  double? totalPaidAmount;
+  double? totalReceivedAmount;
+  double? totalBalance;
+  double? totalWalletAmount;
+  double? totalRemainingAmount;
 
   Totals({
     this.totalPaidAmount,
@@ -149,21 +165,31 @@ class Totals {
   });
 
   Totals.fromJson(Map<String, dynamic> json) {
-    totalPaidAmount = json['totalPaidAmount'];
-    totalReceivedAmount = json['totalReceivedAmount'];
-    totalBalance = json['totalBalance'];
-    totalWalletAmount = json['totalWalletAmount'];
-    totalRemainingAmount = json['totalRemainingAmount'];
+    totalPaidAmount =
+        (json['totalPaidAmount'] as num?)?.toDouble();
+
+    totalReceivedAmount =
+        (json['totalReceivedAmount'] as num?)?.toDouble();
+
+    totalBalance =
+        (json['totalBalance'] as num?)?.toDouble();
+
+    totalWalletAmount =
+        (json['totalWalletAmount'] as num?)?.toDouble();
+
+    totalRemainingAmount =
+        (json['totalRemainingAmount'] as num?)?.toDouble();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalPaidAmount'] = this.totalPaidAmount;
-    data['totalReceivedAmount'] = this.totalReceivedAmount;
-    data['totalBalance'] = this.totalBalance;
-    data['totalWalletAmount'] = this.totalWalletAmount;
-    data['totalRemainingAmount'] = this.totalRemainingAmount;
+    final Map<String, dynamic> data = {};
+
+    data['totalPaidAmount'] = totalPaidAmount;
+    data['totalReceivedAmount'] = totalReceivedAmount;
+    data['totalBalance'] = totalBalance;
+    data['totalWalletAmount'] = totalWalletAmount;
+    data['totalRemainingAmount'] = totalRemainingAmount;
+
     return data;
   }
-
 }

@@ -2,12 +2,10 @@ import '../entity/project_entity.dart';
 import '../entity/project_list_entity.dart';
 
 abstract class ProjectRepository {
-  Future<ProjectListEntity>getProjects({
+  Future<ProjectListEntity> getProjects({
     required int pageNumber,
     required int pageSize,
     String? search,
-
-
   });
 
   Future<ProjectEntity> addProject({
