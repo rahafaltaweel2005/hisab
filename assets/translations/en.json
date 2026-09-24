@@ -1,6 +1,7 @@
 {
   "hiasb": "Hiasb",
   "financial project management": "Financial Project Management",
+
   "register": "Register",
   "login": "Login",
   "full name": "Full Name",
@@ -8,15 +9,19 @@
   "email": "Email",
   "name@company.com": "name@company.com",
   "password": "Password",
-  "create account": "Create account",
+  "create account": "Create Account",
+
   "profile": "Profile",
   "logout": "Logout",
+
   "id": "ID",
   "no data": "No Data",
   "search": "Search",
+
   "totalPaidAmount": "Total Paid Amount",
   "totalReceivedAmount": "Total Received Amount",
   "totalBalance": "Total Balance",
+
   "number": "Number",
   "description": "Description",
   "paid": "Paid",
@@ -24,6 +29,21 @@
   "balance": "Balance",
   "walletAmount": "Wallet Amount",
   "remainingAmount": "Remaining Amount",
-  "total": "Total"
+  "total": "Total",
 
+  "addProject": "Add Project",
+  "basic information": "Basic Information",
+  "project number": "Project Number",
+  "enter project details and scope of work...": "Enter project details and scope of work...",
+
+  "restricted financials": "Financial Information",
+  "paid amount": "Paid Amount",
+  "received amount": "Received Amount",
+  "wallet balance": "Wallet Balance",
+
+  "save": "Save",
+  "cancel": "Cancel",
+
+  "project added successfully": "Project Added Successfully",
+  "ok": "OK"
 }
