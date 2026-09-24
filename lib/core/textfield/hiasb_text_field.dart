@@ -6,7 +6,7 @@ class HiasbTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? title;
   final String hint;
-  final Widget prefixIcon;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool obscureText;
   final ValueChanged<String>? onChange;
@@ -16,7 +16,7 @@ class HiasbTextField extends StatelessWidget {
     required this.controller,
     this.title,
     required this.hint,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     required this.obscureText,
     this.onChange,

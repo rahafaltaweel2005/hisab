@@ -19,7 +19,9 @@ import 'features/profile/data/repository/profile_repository_imp.dart';
 import 'features/profile/domain/usecase/get_profile_use_case.dart';
 import 'features/profile/presentation/cubit/profile_cubit.dart';
 import 'features/projects/data/datasource/project_remote_datasource_impl.dart';
+import 'features/projects/domain/usecase/add_project_use_case.dart';
 import 'features/projects/domain/usecase/get_projects_use_case.dart';
+import 'features/projects/presentation/addproject/cubit/add_project_cubit.dart';
 import 'features/projects/presentation/getprojects/cubit/get_projects_cubit.dart';
 
 void main() {
@@ -55,9 +57,9 @@ void main() {
   final getProjectsUseCase = GetProjectsUseCase(
     projectRepository: projectRepository,
   );
-  // final addProjectUseCase = AddProjectUseCase(
-  //   projectRepository: projectRepository,
-  // );
+  final addProjectUseCase = AddProjectUseCase(
+    projectRepository: projectRepository,
+  );
   // final updateProjectUseCase = UpdateProjectUseCase(
   //   projectRepository: projectRepository,
   // );
@@ -88,6 +90,10 @@ void main() {
           BlocProvider(
             create: (_) =>
                 GetProjectsCubit(getProjectsUseCase: getProjectsUseCase),
+          ),
+          BlocProvider(
+            create: (_) =>
+                AddProjectCubit(addProjectUseCase: addProjectUseCase),
           ),
         ],
         child: const MyApp(),

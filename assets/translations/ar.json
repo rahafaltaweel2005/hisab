@@ -11,6 +11,20 @@
   "create account": "إنشاء الحساب",
   "profile": "الملف الشخصي",
   "logout": "تسجيل الخروج",
-  "id": "ID",
-  "no data": "No Data"
+  "id": "المعرّف",
+  "no data": "لا توجد بيانات",
+  "search": "بحث",
+  "totalPaidAmount": "إجمالي المدفوع",
+  "totalReceivedAmount": "إجمالي المستلم",
+  "totalBalance": "إجمالي الرصيد",
+  "number": "الرقم",
+  "description": "الوصف",
+  "paid": "المدفوع",
+  "received": "المستلم",
+  "balance": "الرصيد",
+  "walletAmount": "المحفظة",
+  "remainingAmount": "المتبقي",
+  "total": "المجموع"
+
+
 }

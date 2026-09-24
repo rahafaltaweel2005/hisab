@@ -11,6 +11,19 @@
   "create account": "Create account",
   "profile": "Profile",
   "logout": "Logout",
-  "id": "المعرّف",
-  "no data": "لا توجد بيانات"
+  "id": "ID",
+  "no data": "No Data",
+  "search": "Search",
+  "totalPaidAmount": "Total Paid Amount",
+  "totalReceivedAmount": "Total Received Amount",
+  "totalBalance": "Total Balance",
+  "number": "Number",
+  "description": "Description",
+  "paid": "Paid",
+  "received": "Received",
+  "balance": "Balance",
+  "walletAmount": "Wallet Amount",
+  "remainingAmount": "Remaining Amount",
+  "total": "Total"
+
 }
