@@ -20,8 +20,13 @@ import 'features/profile/domain/usecase/get_profile_use_case.dart';
 import 'features/profile/presentation/cubit/profile_cubit.dart';
 import 'features/projects/data/datasource/project_remote_datasource_impl.dart';
 import 'features/projects/domain/usecase/add_project_use_case.dart';
+import 'features/projects/domain/usecase/delete_project_use_case.dart';
+import 'features/projects/domain/usecase/get_project_by_id_use_case.dart';
 import 'features/projects/domain/usecase/get_projects_use_case.dart';
+import 'features/projects/domain/usecase/update_project_use_case.dart';
 import 'features/projects/presentation/addproject/cubit/add_project_cubit.dart';
+import 'features/projects/presentation/deleteproject/cubit/delete_project_cubit.dart';
+import 'features/projects/presentation/getprojectbyid/cubit/get_project_by_id_cubit.dart';
 import 'features/projects/presentation/getprojects/cubit/get_projects_cubit.dart';
 
 void main() {
@@ -60,43 +65,57 @@ void main() {
   final addProjectUseCase = AddProjectUseCase(
     projectRepository: projectRepository,
   );
-  // final updateProjectUseCase = UpdateProjectUseCase(
-  //   projectRepository: projectRepository,
-  // );
-  // final getProjectByIdUseCase = GetProjectByIdUseCase(
-  //   projectRepository: projectRepository,
-  // );
-  // final deleteProjectUseCase = DeleteProjectUseCase(
-  //   projectRepository: projectRepository,
-  // );
+  final updateProjectUseCase = UpdateProjectUseCase(
+    projectRepository: projectRepository,
+  );
+  final getProjectByIdUseCase = GetProjectByIdUseCase(
+    projectRepository: projectRepository,
+  );
+  final deleteProjectUseCase = DeleteProjectUseCase(
+    projectRepository: projectRepository,
+  );
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       startLocale: const Locale('en'),
-      child: MultiBlocProvider(
+      child: MultiRepositoryProvider(
         providers: [
-          BlocProvider(
-            create: (_) => RegisterCubit(registerUseCase: registerUseCase),
-          ),
-          BlocProvider(create: (_) => LoginCubit(loginUseCase: loginUseCase)),
-          BlocProvider(
-            create: (_) => LogoutCubit(logoutUseCase: logoutUseCase),
-          ),
-          BlocProvider(
-            create: (_) => ProfileCubit(getProfileUseCase: getProfileUseCase),
-          ),
-          BlocProvider(
-            create: (_) =>
-                GetProjectsCubit(getProjectsUseCase: getProjectsUseCase),
-          ),
-          BlocProvider(
-            create: (_) =>
-                AddProjectCubit(addProjectUseCase: addProjectUseCase),
-          ),
+          RepositoryProvider.value(value: updateProjectUseCase),
         ],
-        child: const MyApp(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => RegisterCubit(registerUseCase: registerUseCase),
+            ),
+            BlocProvider(create: (_) => LoginCubit(loginUseCase: loginUseCase)),
+            BlocProvider(
+              create: (_) => LogoutCubit(logoutUseCase: logoutUseCase),
+            ),
+            BlocProvider(
+              create: (_) => ProfileCubit(getProfileUseCase: getProfileUseCase),
+            ),
+            BlocProvider(
+              create: (_) =>
+                  GetProjectsCubit(getProjectsUseCase: getProjectsUseCase),
+            ),
+            BlocProvider(
+              create: (_) =>
+                  AddProjectCubit(addProjectUseCase: addProjectUseCase),
+            ),
+            BlocProvider(
+              create: (_) => GetProjectByIdCubit(
+                getProjectByIdUseCase: getProjectByIdUseCase,
+              ),
+            ),
+            BlocProvider(
+              create: (_) =>
+                  DeleteProjectCubit(deleteProjectUseCase: deleteProjectUseCase),
+            ),
+          ],
+          child: const MyApp(),
+        ),
       ),
     ),
   );

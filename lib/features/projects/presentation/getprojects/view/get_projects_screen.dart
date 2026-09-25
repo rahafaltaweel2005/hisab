@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiasb_app/core/constant/color_const.dart';
 import 'package:hiasb_app/features/projects/presentation/addproject/view/add_project_screen.dart';
+import 'package:hiasb_app/features/projects/presentation/getprojectbyid/view/get_project_by_id_screen.dart';
 
 import '../../../../../core/textfield/hiasb_text_field.dart';
 import '../cubit/get_projects_cubit.dart';
@@ -184,6 +185,27 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                                     rows: [
                                       ...state.projects.projects.map((project) {
                                         return DataRow(
+                                          onSelectChanged: (selected) async {
+                                            if (selected == true) {
+                                           final result =  await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      GetProjectByIdScreen(
+                                                        projectId:
+                                                            project.projectId,
+                                                      ),
+                                                ),
+                                              );
+                                           if(result == true){
+                                             context.read<GetProjectsCubit>().getProjects(
+                                               pageSize: 10,
+                                               pageNumber: 1,
+                                             );
+
+                                           }
+                                            }
+                                          },
                                           cells: [
                                             DataCell(
                                               Text(
@@ -278,7 +300,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                                             ),
                                           ],
                                         );
-                                      }).toList(),
+                                      }),
 
                                       DataRow(
                                         cells: [

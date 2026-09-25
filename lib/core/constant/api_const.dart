@@ -9,7 +9,7 @@ class ApiConst {
 
   static const String addProject = "/api/projects";
   static const String getProjects = "/api/projects";
-  static  String getProjectById(int projectId) =>  "/api/projects$projectId";
-  static  String deleteProject(int projectId) =>  "/api/projects$projectId";
-  static  String updateProject(int projectId) => "/api/projects$projectId";
+  static  String getProjectById(int projectId) =>  "/api/projects/$projectId";
+  static  String deleteProject(int projectId) =>  "/api/projects/$projectId";
+  static  String updateProject(int projectId) => "/api/projects/$projectId";
 }
