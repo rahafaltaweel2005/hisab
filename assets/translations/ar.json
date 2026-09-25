@@ -1,49 +1,61 @@
 {
-  "hiasb": "حساب",
-  "financial project management": "إدارة المشاريع المالية",
+  "hiasb": "حِساب",
+  "financial project management": "الإدارة المالية للمشاريع",
 
-  "register": "إنشاء حساب",
+  "register": "التسجيل",
   "login": "تسجيل الدخول",
   "full name": "الاسم الكامل",
   "Mohammad": "محمد",
   "email": "البريد الإلكتروني",
   "name@company.com": "name@company.com",
   "password": "كلمة المرور",
-  "create account": "إنشاء الحساب",
+  "create account": "إنشاء حساب",
 
   "profile": "الملف الشخصي",
   "logout": "تسجيل الخروج",
 
-  "id": "المعرّف",
+  "id": "الرقم التعريفي",
   "no data": "لا توجد بيانات",
   "search": "بحث",
 
-  "totalPaidAmount": "إجمالي المدفوع",
-  "totalReceivedAmount": "إجمالي المستلم",
+  "totalPaidAmount": "إجمالي المدفوعات",
+  "totalReceivedAmount": "إجمالي المقبوضات",
   "totalBalance": "إجمالي الرصيد",
 
   "number": "الرقم",
   "description": "الوصف",
   "paid": "المدفوع",
-  "received": "المستلم",
+  "received": "المقبوض",
   "balance": "الرصيد",
-  "walletAmount": "المحفظة",
-  "remainingAmount": "المتبقي",
-  "total": "المجموع",
+  "walletAmount": "رصيد المحفظة",
+  "remainingAmount": "المبلغ المتبقي",
+  "total": "الإجمالي",
 
   "addProject": "إضافة مشروع",
   "basic information": "المعلومات الأساسية",
   "project number": "رقم المشروع",
   "enter project details and scope of work...": "أدخل تفاصيل المشروع ونطاق العمل...",
 
-  "restricted financials": "المعلومات المالية",
+  "restricted financials": "البيانات المالية المقيّدة",
   "paid amount": "المبلغ المدفوع",
-  "received amount": "المبلغ المستلم",
+  "received amount": "المبلغ المقبوض",
   "wallet balance": "رصيد المحفظة",
 
   "save": "حفظ",
   "cancel": "إلغاء",
 
   "project added successfully": "تمت إضافة المشروع بنجاح",
-  "ok": "حسنًا"
+  "ok": "حسناً",
+
+  "project details": "تفاصيل المشروع",
+  "wallet": "المحفظة",
+  "remaining balance": "الرصيد المتبقي",
+  "creation date": "تاريخ الإنشاء",
+  "last update date": "تاريخ آخر تحديث",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "delete project": "حذف المشروع",
+  "are you sure you want to delete this project?": "هل أنت متأكد من حذف هذا المشروع؟ لا يمكن التراجع عن هذه العملية.",
+  "update project": "تعديل المشروع",
+  "project update successfully": "تم تعديل المشروع بنجاح"
 }

@@ -134,7 +134,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                           ),
                           decoration: InputDecoration(
                             hintText:
-                                "enter project details and scope of work...",
+                                "enter project details and scope of work...".tr(),
                             hintStyle: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,

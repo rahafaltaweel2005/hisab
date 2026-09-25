@@ -77,7 +77,10 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('totalPaidAmount'.tr()),
+                                  Text(
+                                    'totalPaidAmount'.tr(),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   Spacer(),
 
                                   Text(
@@ -105,7 +108,10 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('totalReceivedAmount'.tr()),
+                                  Text(
+                                    'totalReceivedAmount'.tr(),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   Spacer(),
 
                                   Text(
@@ -136,7 +142,10 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('totalBalance'.tr()),
+                            Text(
+                              'totalBalance'.tr(),
+                              style: TextStyle(fontSize: 20),
+                            ),
                             Spacer(),
 
                             Text(
@@ -152,236 +161,215 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: size.width,
-                        height: size.height * 0.49,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: DataTable(
-                                    columns: [
-                                      DataColumn(label: Text('number'.tr())),
-                                      DataColumn(
-                                        label: Text('description'.tr()),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: state.projects.projects.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GetProjectByIdScreen(
+                                    projectId: state
+                                        .projects
+                                        .projects[index]
+                                        .projectId,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    spacing: 5,
+                                    children: [
+                                      Icon(
+                                        Icons.tag_outlined,
+                                        color: ColorConst.positive,
+                                        size: 20,
                                       ),
-                                      DataColumn(label: Text('paid'.tr())),
-                                      DataColumn(label: Text('received'.tr())),
-                                      DataColumn(label: Text('balance'.tr())),
-                                      DataColumn(
-                                        label: Text('walletAmount'.tr()),
-                                      ),
-                                      DataColumn(
-                                        label: Text('remainingAmount'.tr()),
-                                      ),
-                                    ],
-                                    rows: [
-                                      ...state.projects.projects.map((project) {
-                                        return DataRow(
-                                          onSelectChanged: (selected) async {
-                                            if (selected == true) {
-                                           final result =  await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      GetProjectByIdScreen(
-                                                        projectId:
-                                                            project.projectId,
-                                                      ),
-                                                ),
-                                              );
-                                           if(result == true){
-                                             context.read<GetProjectsCubit>().getProjects(
-                                               pageSize: 10,
-                                               pageNumber: 1,
-                                             );
-
-                                           }
-                                            }
-                                          },
-                                          cells: [
-                                            DataCell(
-                                              Text(
-                                                project.projectNumber
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.description,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color: ColorConst.textDark,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.paidAmount.toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color: project.paidAmount > 0
-                                                      ? ColorConst.textDark
-                                                      : ColorConst.error,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.receivedAmount
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color:
-                                                      project.receivedAmount > 0
-                                                      ? ColorConst.textDark
-                                                      : ColorConst.error,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.balance.toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color: project.balance > 0
-                                                      ? ColorConst.positive
-                                                      : ColorConst.error,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.walletAmount.toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color:
-                                                      project.walletAmount > 0
-                                                      ? ColorConst.textDark
-                                                      : ColorConst.error,
-                                                ),
-                                              ),
-                                            ),
-
-                                            DataCell(
-                                              Text(
-                                                project.remainingAmount
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                  color:
-                                                      project.remainingAmount >
-                                                          0
-                                                      ? ColorConst.positive
-                                                      : ColorConst.error,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }),
-
-                                      DataRow(
-                                        cells: [
-                                          const DataCell(
-                                            Text(
-                                              'Σ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              'total'.tr(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              state.projects.totalPaidAmount
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              state.projects.totalReceivedAmount
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              state.projects.totalBalance
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              state.projects.totalWalletAmount
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-
-                                          DataCell(
-                                            Text(
-                                              state
-                                                  .projects
-                                                  .totalRemainingAmount
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        state
+                                            .projects
+                                            .projects[index]
+                                            .projectNumber
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorConst.positive,
+                                          fontSize: 20,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
+                                  Text(
+                                    state.projects.projects[index].description,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: ColorConst.textDark,
+                                    ),
+                                  ),
+                                  Divider(),
+                                  Row(
+                                    spacing: 10,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'paid'.tr(),
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              '${state.projects.projects[index].paidAmount} JD',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                                color:
+                                                    state
+                                                            .projects
+                                                            .projects[index]
+                                                            .paidAmount >
+                                                        0
+                                                    ? ColorConst.textDark
+                                                    : ColorConst.error,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'received'.tr(),
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              '${state.projects.projects[index].receivedAmount} JD',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                                color:
+                                                    state
+                                                            .projects
+                                                            .projects[index]
+                                                            .receivedAmount >
+                                                        0
+                                                    ? ColorConst.textDark
+                                                    : ColorConst.error,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    spacing: 10,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'balance'.tr(),
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              '${state.projects.projects[index].balance} JD',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                                color:
+                                                    state
+                                                            .projects
+                                                            .projects[index]
+                                                            .balance >
+                                                        0
+                                                    ? ColorConst.textDark
+                                                    : ColorConst.error,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'wallet'.tr(),
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              '${state.projects.projects[index].walletAmount} JD',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                                color:
+                                                    state
+                                                            .projects
+                                                            .projects[index]
+                                                            .walletAmount >
+                                                        0
+                                                    ? ColorConst.textDark
+                                                    : ColorConst.error,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Divider(),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'remaining balance'.tr(),
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        '${state.projects.projects[index].remainingAmount} JD',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20,
+                                          color:
+                                              state
+                                                      .projects
+                                                      .projects[index]
+                                                      .remainingAmount >
+                                                  0
+                                              ? ColorConst.textDark
+                                              : ColorConst.error,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ],
                   ),
