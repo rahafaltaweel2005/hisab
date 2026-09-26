@@ -1,30 +1,25 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:hiasb_app/main.dart';
+import 'package:hiasb_app/features/auth/data/model/register_response_model.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('RegisterResponseModel parses token and nested user', () {
+    final model = RegisterResponseModel.fromJson({
+      'accessToken': 'abc123',
+      'expiresAt': '2026-09-27T10:00:00+00:00',
+      'user': {
+        'id': 'u1',
+        'displayName': 'Mohammad',
+        'email': 'm@example.com',
+      },
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(model.accessToken, 'abc123');
+    expect(model.expiresAt, '2026-09-27T10:00:00+00:00');
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    final user = model.toEntity();
+    expect(user.id, 'u1');
+    expect(user.displayName, 'Mohammad');
+    expect(user.email, 'm@example.com');
   });
 }

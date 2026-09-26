@@ -7,6 +7,7 @@ import 'package:hiasb_app/core/constant/svg_const.dart';
 import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/register/state/register_state.dart';
 import '../../../../../core/textfield/hiasb_text_field.dart';
+import '../../../../core/constant/app_spacing.dart';
 import '../../../home/presentation/view/home_screen.dart';
 import '../login/cubit/login_cubit.dart';
 import '../login/state/login_state.dart';
@@ -19,16 +20,15 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final PageController controller = PageController();
   final TextEditingController displayNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  int currentPage = 0;
+  int currentPage = 1;
   bool isPasswordHidden = true;
 
   @override
   void dispose() {
-    controller.dispose();
+
     displayNameController.dispose();
     passwordController.dispose();
     emailController.dispose();
@@ -39,6 +39,166 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       isPasswordHidden = !isPasswordHidden;
     });
+  }
+  Widget _buildRegisterForm() {
+
+    return   BlocConsumer<RegisterCubit, RegisterState>(
+      builder: (context, state) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            HiasbTextField(
+              controller: displayNameController,
+              title: 'full name'.tr(),
+              hint: 'Mohammad'.tr(),
+              prefixIcon: Icon(
+                Icons.person_2_outlined,
+                color: ColorConst.neutral,
+                size: 20,
+              ),
+              obscureText: false,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            HiasbTextField(
+              controller: emailController,
+              title: 'email'.tr(),
+              hint: 'name@company.com'.tr(),
+              prefixIcon: Icon(
+                Icons.email_outlined,
+                color: ColorConst.neutral,
+                size: 20,
+              ),
+              obscureText: false,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            HiasbTextField(
+              controller: passwordController,
+              title: 'password'.tr(),
+              hint: '••••••••',
+              prefixIcon: const Icon(
+                Icons.lock_outline,
+                color: ColorConst.neutral,
+                size: 20,
+              ),
+              suffixIcon: IconButton(
+                onPressed: togglePassword,
+                icon: Icon(
+                  isPasswordHidden
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                ),
+              ),
+              obscureText: isPasswordHidden,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            ElevatedButton(
+              onPressed: () {
+                context.read<RegisterCubit>().register(
+                  displayName: displayNameController.text
+                      .trim(),
+                  email: emailController.text.trim(),
+                  password: passwordController.text,
+                );
+              },
+              child: Row(
+                spacing: AppSpacing.sm,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('create account'.tr()),
+                  Icon(Icons.check_circle_outlined),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+      listener: (context, state) {
+        if (state is RegisterErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+        if (state is RegisterSuccessState) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) =>
+              HomeScreen(),));
+        }
+      },
+    );
+  }
+
+  Widget _buildLoginForm() {
+
+    return BlocConsumer<LoginCubit, LoginState>(
+      builder: (context, state) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            HiasbTextField(
+              controller: emailController,
+              title: 'email'.tr(),
+              hint: 'name@company.com'.tr(),
+              prefixIcon: Icon(
+                Icons.email_outlined,
+                color: ColorConst.neutral,
+                size: 20,
+              ),
+              obscureText: false,
+            ),
+           const SizedBox(height: AppSpacing.md),
+            HiasbTextField(
+              controller: passwordController,
+              title: 'password'.tr(),
+              hint: '••••••••',
+              prefixIcon: const Icon(
+                Icons.lock_outline,
+                color: ColorConst.neutral,
+                size: 20,
+              ),
+              suffixIcon: IconButton(
+                onPressed: togglePassword,
+                icon: Icon(
+                  isPasswordHidden
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                ),
+              ),
+              obscureText: isPasswordHidden,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            ElevatedButton(
+              onPressed: () {
+                context.read<LoginCubit>().login(
+                  email: emailController.text.trim(),
+                  password: passwordController.text,
+                );
+              },
+              child: Row(
+                spacing: AppSpacing.sm,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('login'.tr()),
+                  Icon(Icons.login_outlined),
+
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+      listener: (context, state) {
+        if (state is LoginErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+        if (state is LoginSuccessState) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) =>
+              HomeScreen(),));
+        }
+      },
+    );
   }
 
   @override
@@ -51,20 +211,19 @@ class _AuthScreenState extends State<AuthScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: size.height * 0.1),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.xxl,
+          ),
           child: Column(
 
             children: [
-              Container(
-                height: size.height * 0.1,
-                width: size.width * 0.2,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: SvgPicture.asset(SvgConst.logo),
+              SizedBox(
+                  height: 72,
+                  width: 72,
+                  child: SvgPicture.asset(SvgConst.logo)
               ),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 "hiasb".tr(),
                 style: TextStyle(
@@ -77,13 +236,13 @@ class _AuthScreenState extends State<AuthScreen> {
               Text(
                 "financial project management".tr(),
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: ColorConst.neutral,
                   decoration: TextDecoration.none,
                 ),
               ),
-              SizedBox(height: size.height * 0.01),
+              const SizedBox(height: AppSpacing.lg),
               Center(
                 child: Container(
                   width: size.width * 0.9,
@@ -94,61 +253,55 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   child: Row(
                     children: [
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            currentPage = 0;
-                          });
-                          controller.animateToPage(
-                            0,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              currentPage = 0;
+                            });
+
+                          },
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            backgroundColor: currentPage == 0
+                                ? Color(0xFFFFFFFF)
+                                : ColorConst.surfaceLight,
                           ),
-                          padding: EdgeInsets.all(15),
-                          minimumSize: Size(172, 30),
-                          backgroundColor: currentPage == 0
-                              ? Color(0xFFFFFFFF)
-                              : ColorConst.surfaceLight,
-                        ),
-                        child: Text(
-                          "register".tr(),
-                          style: TextStyle(
-                            color: ColorConst.textDark,
-                            fontWeight: FontWeight.w600,
+                          child: Text(
+                            "register".tr(),
+                            style: TextStyle(
+                              color: ColorConst.textDark,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            currentPage = 1;
-                          });
-                          controller.animateToPage(
-                            1,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              currentPage = 1;
+                            });
+
+                          },
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            backgroundColor: currentPage == 1
+                                ? Color(0xFFFFFFFF)
+                                : ColorConst.surfaceLight,
                           ),
-                          padding: EdgeInsets.all(15),
-                          minimumSize: Size(172, 30),
-                          backgroundColor: currentPage == 1
-                              ? Color(0xFFFFFFFF)
-                              : ColorConst.surfaceLight,
-                        ),
-                        child: Text(
-                          "login".tr(),
-                          style: TextStyle(
-                            color: ColorConst.textDark,
-                            fontWeight: FontWeight.w600,
+                          child: Text(
+                            "login".tr(),
+                            style: TextStyle(
+                              color: ColorConst.textDark,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
@@ -156,187 +309,16 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: size.height * 0.05),
+              const SizedBox(height: AppSpacing.md),
               Container(
                 width: size.width * 0.9,
-                height: size.height * 0.45,
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color(0xFFFFFFFF),
                 ),
-                child: PageView(
-                  controller: controller,
-                  onPageChanged: (value) {
-                    setState(() {
-                      currentPage = value;
-                    });
-                  },
-                  children: [
-                    BlocConsumer<RegisterCubit, RegisterState>(
-                      builder: (context, state) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            HiasbTextField(
-                              controller: displayNameController,
-                              title: 'full name'.tr(),
-                              hint: 'Mohammad'.tr(),
-                              prefixIcon: Icon(
-                                Icons.person_2_outlined,
-                                color: ColorConst.neutral,
-                                size: 20,
-                              ),
-                              obscureText: false,
-                            ),
-                            SizedBox(height: size.height * 0.01),
-                            HiasbTextField(
-                              controller: emailController,
-                              title: 'email'.tr(),
-                              hint: 'name@company.com'.tr(),
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: ColorConst.neutral,
-                                size: 20,
-                              ),
-                              obscureText: false,
-                            ),
-                            SizedBox(height: size.height * 0.01),
-                            HiasbTextField(
-                              controller: passwordController,
-                              title: 'password'.tr(),
-                              hint: '.....',
-                              prefixIcon: TextButton(
-                                onPressed: () {
-                                  togglePassword();
-                                },
-                                child: isPasswordHidden
-                                    ? const Icon(
-                                  Icons.visibility_off_outlined,
-                                  color: ColorConst.primary,
-                                )
-                                    : const Icon(
-                                  Icons.visibility_outlined,
-                                  color: ColorConst.primary,
-                                ),
-                              ),
-                              obscureText: isPasswordHidden,
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorConst.positive,
-                              ),
-                              onPressed: () {
-                                context.read<RegisterCubit>().register(
-                                  displayName: displayNameController.text
-                                      .trim(),
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('create account'.tr()),
-                                  SizedBox(width: size.width * 0.01),
-                                  Icon(Icons.check_circle_outlined),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      listener: (context, state) {
-                        if (state is RegisterErrorState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.message)),
-                          );
-                        }
-                        if (state is RegisterSuccessState) {
-                          Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) =>
-                              HomeScreen(),));
-                        }
-                      },
-                    ),
-                    BlocConsumer<LoginCubit, LoginState>(
-                      builder: (context, state) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            HiasbTextField(
-                              controller: emailController,
-                              title: 'email'.tr(),
-                              hint: 'name@company.com'.tr(),
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: ColorConst.neutral,
-                                size: 20,
-                              ),
-                              obscureText: false,
-                            ),
-                            SizedBox(height: size.height * 0.01),
-                            HiasbTextField(
-                              controller: passwordController,
-                              title: 'password'.tr(),
-                              hint: '.....',
-                              prefixIcon: TextButton(
-                                onPressed: () {
-                                  togglePassword();
-                                },
-                                child: isPasswordHidden
-                                    ? const Icon(
-                                  Icons.visibility_off_outlined,
-                                  color: ColorConst.primary,
-                                )
-                                    : const Icon(
-                                  Icons.visibility_outlined,
-                                  color: ColorConst.primary,
-                                ),
-                              ),
-                              obscureText: isPasswordHidden,
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorConst.textDark,
-                              ),
-                              onPressed: () {
-                                context.read<LoginCubit>().login(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('login'.tr()),
-                                  Icon(Icons.keyboard_double_arrow_left),
-                                  SizedBox(width: size.width * 0.01),
-
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      listener: (context, state) {
-                        if (state is LoginErrorState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.message)),
-                          );
-                        }
-                        if (state is LoginSuccessState) {
-                          Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) =>
-                              HomeScreen(),));
-                        }
-                      },
-                    ),
-                  ],
+                child: currentPage == 0 ? _buildRegisterForm() : _buildLoginForm(),
                 ),
-              ),
             ],
           ),
         ),

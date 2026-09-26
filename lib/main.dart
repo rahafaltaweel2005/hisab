@@ -10,10 +10,13 @@ import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cub
 import 'package:hiasb_app/features/projects/data/repository/project_repository_impl.dart';
 
 import 'core/app_setting/theme/app_theme.dart';
+import 'core/constant/app_const.dart';
 import 'core/network/api_client.dart';
+import 'core/storage/secure_storage_helper.dart';
 import 'features/auth/domain/usecase/logout_use_case.dart';
 import 'features/auth/domain/usecase/register_use_case.dart';
 import 'features/auth/presentation/view/auth_screen.dart';
+import 'features/home/presentation/view/home_screen.dart';
 import 'features/profile/data/datasource/profile_remote_data_source_impl.dart';
 import 'features/profile/data/repository/profile_repository_imp.dart';
 import 'features/profile/domain/usecase/get_profile_use_case.dart';
@@ -29,9 +32,25 @@ import 'features/projects/presentation/deleteproject/cubit/delete_project_cubit.
 import 'features/projects/presentation/getprojectbyid/cubit/get_project_by_id_cubit.dart';
 import 'features/projects/presentation/getprojects/cubit/get_projects_cubit.dart';
 
-void main() {
+Future<bool> _hasValidToken() async {
+  final token = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
+  if (token == null || token.isEmpty) return false;
+
+  final expiry = DateTime.tryParse(
+    await SecureStorageHelper.read(key: AppConst.tokenExpiryKey) ?? '',
+  );
+  if (expiry == null || expiry.isBefore(DateTime.now())) {
+    await SecureStorageHelper.delete(key: AppConst.accessTokenKey);
+    await SecureStorageHelper.delete(key: AppConst.tokenExpiryKey);
+    return false;
+  }
+  return true;
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ApiClient.init();
+  final isLoggedIn = await _hasValidToken();
 
   final authRemoteDatasource = AuthRemoteDatasourceImp();
 
@@ -114,7 +133,7 @@ void main() {
                   DeleteProjectCubit(deleteProjectUseCase: deleteProjectUseCase),
             ),
           ],
-          child: const MyApp(),
+          child: MyApp(isLoggedIn: isLoggedIn),
         ),
       ),
     ),
@@ -122,18 +141,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
 
-      home: AuthScreen(),
+      home: isLoggedIn ? HomeScreen() : AuthScreen(),
     );
   }
 }

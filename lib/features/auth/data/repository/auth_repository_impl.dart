@@ -20,9 +20,17 @@ class AuthRepositoryImpl extends AuthRepository {
       email: email,
       password: password,
     );
+    final accessToken = model.accessToken;
+    if (accessToken == null || accessToken.isEmpty) {
+      throw Exception('Register response did not include an access token.');
+    }
     await SecureStorageHelper.write(
       key: AppConst.accessTokenKey,
-      value: model.accessToken.toString(),
+      value: accessToken,
+    );
+    await SecureStorageHelper.write(
+      key: AppConst.tokenExpiryKey,
+      value: model.expiresAt.toString(),
     );
 
     return model.toEntity();
@@ -44,6 +52,19 @@ class AuthRepositoryImpl extends AuthRepository {
       email: email,
       password: password,
     );
+    final accessToken = model.accessToken;
+    if (accessToken == null || accessToken.isEmpty) {
+      throw Exception('Register response did not include an access token.');
+    }
+    await SecureStorageHelper.write(
+      key: AppConst.accessTokenKey,
+      value: accessToken,
+    );
+    await SecureStorageHelper.write(
+      key: AppConst.tokenExpiryKey,
+      value: model.expiresAt.toString(),
+    );
+
     return model.toEntity();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constant/app_spacing.dart';
 import '../../constant/color_const.dart';
 
 class AppTheme {
@@ -11,9 +12,14 @@ class AppTheme {
 
     colorScheme: const ColorScheme.light(
       primary: ColorConst.primary,
+      onPrimary: ColorConst.textLight,
       secondary: ColorConst.secondary,
       tertiary: ColorConst.tertiary,
-      surface: ColorConst.surfaceLight,
+      surface: Colors.white,
+      onSurface: ColorConst.textDark,
+      onSurfaceVariant: ColorConst.neutral,
+      surfaceContainerHighest: ColorConst.surfaceLight,
+      outline: ColorConst.border,
       error: ColorConst.error,
     ),
 
@@ -68,28 +74,31 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: ColorConst.surfaceLight,
-
+      hintStyle: TextStyle(
+        color: ColorConst.neutral.withValues(alpha: 0.55),
+        fontWeight: FontWeight.w400,
+      ),
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 14,
       ),
 
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: const BorderSide(
           color: ColorConst.border,
         ),
       ),
 
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: const BorderSide(
           color: ColorConst.border,
         ),
       ),
 
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: const BorderSide(
           color: ColorConst.primary,
           width: 1.5,
@@ -97,14 +106,14 @@ class AppTheme {
       ),
 
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: const BorderSide(
           color: ColorConst.error,
         ),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         borderSide: const BorderSide(
           color: ColorConst.error,
           width: 1.5,
@@ -116,10 +125,10 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorConst.primary,
         foregroundColor: Colors.white,
-        minimumSize: const Size(double.infinity, 52),
+        minimumSize: const Size(64, 52),
 
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(AppRadius.md),
         ),
 
         elevation: 0,
@@ -148,7 +157,7 @@ class AppTheme {
       margin: EdgeInsets.zero,
 
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         side: const BorderSide(
           color: ColorConst.border,
         ),
