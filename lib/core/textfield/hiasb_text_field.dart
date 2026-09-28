@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constant/color_const.dart';
 import '../constant/app_spacing.dart';
 
 class HiasbTextField extends StatelessWidget {
@@ -11,6 +10,8 @@ class HiasbTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool obscureText;
   final ValueChanged<String>? onChange;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   const HiasbTextField({
     super.key,
@@ -21,6 +22,8 @@ class HiasbTextField extends StatelessWidget {
     this.suffixIcon,
     required this.obscureText,
     this.onChange,
+    this.keyboardType,
+    this.validator,
   });
 
   @override
@@ -34,14 +37,17 @@ class HiasbTextField extends StatelessWidget {
           Text(title!, style: theme.textTheme.titleSmall),
           const SizedBox(height: AppSpacing.xs),
         ],
-        TextField(
+        TextFormField(
           controller: controller,
           obscureText: obscureText,
-          onChanged: onChange,
+           onChanged: onChange,
+          keyboardType: keyboardType,
+          validator: validator,
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
+
           ),
         ),
       ],

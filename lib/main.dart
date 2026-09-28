@@ -49,6 +49,7 @@ Future<bool> _hasValidToken() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   ApiClient.init();
   final isLoggedIn = await _hasValidToken();
 
@@ -93,6 +94,7 @@ Future<void> main() async {
   final deleteProjectUseCase = DeleteProjectUseCase(
     projectRepository: projectRepository,
   );
+  DateFormat.useNativeDigitsByDefaultFor('ar', false);
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -149,9 +151,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Hisab',
       theme: AppTheme.lightTheme,
       localizationsDelegates: context.localizationDelegates,
+
       supportedLocales: context.supportedLocales,
       locale: context.locale,
 

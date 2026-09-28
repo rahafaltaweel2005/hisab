@@ -57,5 +57,8 @@
   "delete project": "حذف المشروع",
   "are you sure you want to delete this project?": "هل أنت متأكد من حذف هذا المشروع؟ لا يمكن التراجع عن هذه العملية.",
   "update project": "تعديل المشروع",
-  "project update successfully": "تم تعديل المشروع بنجاح"
+  "project update successfully": "تم تعديل المشروع بنجاح",
+  "insert your first project": "أضف مشروعك الأول",
+  "empty projects subtitle": "أضف مشروعاً لتتابع المدفوعات والمقبوضات والرصيد في مكان واحد.",
+  "add project": "إضافة مشروع"
 }

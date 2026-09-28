@@ -31,9 +31,82 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
     super.initState();
   }
 
+  String _formatAmount(num value) {
+    return '${NumberFormat('#,##0.##').format(value)} JD';
+  }
+
+
+  Widget _cardStat(String label, num value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(fontSize: 12, color: ColorConst.neutral)),
+        const SizedBox(height: 2),
+        Text(
+          _formatAmount(value),
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: value < 0 ? ColorConst.error : ColorConst.textDark,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _dateRow(IconData icon, String label, DateTime date) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: ColorConst.neutral),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: TextStyle(fontSize: 14, color: ColorConst.neutral),
+          ),
+          const Spacer(),
+          Text(
+            DateFormat.yMMMd(context.locale.toString()).format(date),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: ColorConst.textDark,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmDelete() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text('delete project'.tr()),
+        content: Text('are you sure you want to delete this project?'.tr()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text('cancel'.tr()),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: ColorConst.error),
+            onPressed: () {
+              context.read<DeleteProjectCubit>().deleteProject(
+                projectId: widget.projectId,
+              );
+            },
+            child: Text('delete'.tr()),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('project details'.tr())),
       body: BlocListener<DeleteProjectCubit, DeleteProjectState>(
@@ -58,124 +131,45 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
             }
             if (state is GetProjectByIdLoadedState) {
               return SingleChildScrollView(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   spacing: 20,
                   children: [
                     Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
+                      width: double.infinity,
+                      padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: ColorConst.textDark),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "# ${state.project.projectNumber}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 40,
-                              color: ColorConst.textDark,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorConst.positive.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "#${state.project.projectNumber}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: ColorConst.positive,
+                              ),
                             ),
                           ),
-                          Text('description'.tr()),
+                          const SizedBox(height: 12),
                           Text(
                             state.project.description,
-                            maxLines: 2,
                             style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      spacing: 10,
-                      children: [
-                        Container(
-                          width: size.width * 0.45,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "paid".tr(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: ColorConst.textDark,
-                                ),
-                              ),
-                              Text(
-                                "${state.project.paidAmount} JD",
-                                maxLines: 2,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: ColorConst.textDark,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.45,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "received".tr(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: ColorConst.textDark,
-                                ),
-                              ),
-                              Text(
-                                "${state.project.receivedAmount} JD",
-                                maxLines: 2,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: ColorConst.textDark,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "balance".tr(),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
-                            ),
-                          ),
-                          Text(
-                            state.project.balance.toString(),
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              height: 1.5,
                               color: ColorConst.textDark,
                             ),
                           ),
@@ -183,38 +177,10 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                       ),
                     ),
                     Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "wallet".tr(),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
-                            ),
-                          ),
-                          Text(
-                            state.project.walletAmount.toString(),
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -223,70 +189,97 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                           Text(
                             "remaining balance".tr(),
                             style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
+                              fontSize: 14,
+                              color: Colors.white70,
                             ),
                           ),
+                          const SizedBox(height: 6),
                           Text(
-                            state.project.remainingAmount.toString(),
-                            maxLines: 2,
+                            _formatAmount(state.project.remainingAmount),
                             style: TextStyle(
-                              fontSize: 20,
-                              color: ColorConst.textDark,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w700,
+                              color: state.project.remainingAmount < 0
+                                  ? Colors.red.shade200
+                                  : Colors.white,
                             ),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.calendar_today, size: 15),
-                              SizedBox(width: 10),
-                              Text(
-                                "creation date".tr(),
-                                style: TextStyle(color: ColorConst.textDark),
-                              ),
-                              Spacer(),
-                              Text(
-                                DateFormat.yMMMd().format(
-                                  state.project.createdAt,
+                              Expanded(
+                                child: _cardStat(
+                                  'paid'.tr(),
+                                  state.project.paidAmount,
                                 ),
-                                style: TextStyle(color: ColorConst.textDark),
+                              ),
+                              Expanded(
+                                child: _cardStat(
+                                  'received'.tr(),
+                                  state.project.receivedAmount,
+                                ),
                               ),
                             ],
                           ),
-                          Divider(),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
-                              Icon(Icons.update, size: 15),
-                              SizedBox(width: 10),
-                              Text(
-                                "last update date".tr(),
-                                style: TextStyle(color: ColorConst.textDark),
-                              ),
-                              Spacer(),
-                              Text(
-                                DateFormat.yMMMd().format(
-                                  state.project.updatedAt,
+                              Expanded(
+                                child: _cardStat(
+                                  'balance'.tr(),
+                                  state.project.balance,
                                 ),
-                                style: TextStyle(color: ColorConst.textDark),
+                              ),
+                              Expanded(
+                                child: _cardStat(
+                                  'wallet'.tr(),
+                                  state.project.walletAmount,
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _dateRow(
+                            Icons.calendar_today,
+                            "creation date".tr(),
+                            state.project.createdAt,
+                          ),
+                          const Divider(height: 1),
+                          _dateRow(
+                            Icons.update,
+                            "last update date".tr(),
+                            state.project.updatedAt,
+                          ),
+                        ],
+                      ),
+                    ),
                     Row(
-                      spacing: 10,
+                      spacing: 12,
                       children: [
                         Expanded(
                           child: ElevatedButton(
@@ -298,7 +291,8 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                                 MaterialPageRoute(
                                   builder: (routeContext) => BlocProvider(
                                     create: (_) => UpdateProjectCubit(
-                                      updateProjectUseCase: routeContext.read<UpdateProjectUseCase>(),
+                                      updateProjectUseCase: routeContext
+                                          .read<UpdateProjectUseCase>(),
                                     ),
                                     child: UpdateProjectScreen(
                                       projectId: project.projectId,
@@ -309,9 +303,11 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                               );
 
                               if (updated == true && context.mounted) {
-                                context.read<GetProjectByIdCubit>().getProjectById(
-                                  projectId: project.projectId,
-                                );
+                                context
+                                    .read<GetProjectByIdCubit>()
+                                    .getProjectById(
+                                      projectId: project.projectId,
+                                    );
                                 context.read<GetProjectsCubit>().getProjects(
                                   pageNumber: AppConst.defaultPageNumber,
                                   pageSize: AppConst.defaultPageSize,
@@ -319,6 +315,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                               }
                             },
                             child: Row(
+                              spacing: 5,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.edit_outlined),
@@ -330,56 +327,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                  builder: (_) {
-                                  return AlertDialog(
-                                    title: Text('delete project'.tr()),
-                                    content: Text(
-                                      'are you sure you want to delete this project?'
-                                          .tr(),
-                                    ),
-                                    actions: [
-                                      Row(
-                                        spacing: 10,
-                                        children: [
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text('cancel'.tr()),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                context
-                                                    .read<DeleteProjectCubit>()
-                                                    .deleteProject(
-                                                      projectId: widget.projectId,
-                                                    );
-                                              },
-                                              style: ButtonStyle(
-                                                backgroundColor: WidgetStateProperty.all(
-                                                  Colors.white,
-                                                ),
-                                                iconColor: WidgetStateProperty.all(
-                                                  ColorConst.error,
-                                                ),
-                                                side: WidgetStateProperty.all(
-                                                  BorderSide(color: ColorConst.error, width: 1),
-                                                ),
-                                              ),
-                                              child: Text('delete'.tr() , style:  TextStyle(color: ColorConst.error),),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              _confirmDelete;
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
@@ -393,6 +341,8 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                               ),
                             ),
                             child: Row(
+                              spacing: 5,
+
                               mainAxisAlignment: MainAxisAlignment.center,
 
                               children: [

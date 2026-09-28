@@ -5,6 +5,7 @@ import 'package:hiasb_app/core/constant/color_const.dart';
 import 'package:hiasb_app/features/projects/presentation/addproject/view/add_project_screen.dart';
 import 'package:hiasb_app/features/projects/presentation/getprojectbyid/view/get_project_by_id_screen.dart';
 
+import '../../../../../core/constant/app_const.dart';
 import '../../../../../core/textfield/hiasb_text_field.dart';
 import '../cubit/get_projects_cubit.dart';
 import '../state/get_projects_state.dart';
@@ -23,13 +24,58 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
 
   @override
   void initState() {
-    context.read<GetProjectsCubit>().getProjects(pageSize: 10, pageNumber: 1);
+    context.read<GetProjectsCubit>().getProjects(
+      pageSize: AppConst.defaultPageSize,
+      pageNumber: AppConst.defaultPageNumber,
+    );
     super.initState();
+  }
+
+  String _formatAmount(num value) {
+    return '${NumberFormat('#,##0.##').format(value)} JD';
+  }
+
+  Widget _summaryItem(String label, num value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 13, color: Colors.white70),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          _formatAmount(value),
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _cardStat(String label, num value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(fontSize: 12, color: ColorConst.neutral)),
+        const SizedBox(height: 2),
+        Text(
+          _formatAmount(value),
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: value < 0 ? ColorConst.error : ColorConst.textDark,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
 
     return BlocBuilder<GetProjectsCubit, GetProjectsState>(
       builder: (context, state) {
@@ -40,366 +86,354 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
           return Center(child: Text(state.message));
         }
         if (state is GetProjectsLoadedState) {
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    spacing: 20,
-                    children: [
-                      HiasbTextField(
-                        controller: searchController,
-                        hint: 'search'.tr(),
-                        onChange: (value) {
-                          context.read<GetProjectsCubit>().searchProjects(
-                            value,
-                          );
-                        },
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: ColorConst.neutral,
-                          size: 20,
+          return state.projects.projects.length == 0
+              ? Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 96,
+                          height: 96,
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.08),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.folder_open_rounded,
+                            size: 44,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
-                        obscureText: false,
-                      ),
-                      Row(
-                        spacing: 5,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 100,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'totalPaidAmount'.tr(),
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Spacer(),
-
-                                  Text(
-                                    "${state.projects.totalPaidAmount} JD",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                      color: state.projects.totalPaidAmount > 0
-                                          ? ColorConst.textDark
-                                          : ColorConst.error,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'insert your first project'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: ColorConst.textDark,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 280),
+                          child: Text(
+                            'empty projects subtitle'.tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              height: 1.6,
+                              color: ColorConst.neutral,
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              height: 100,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'totalReceivedAmount'.tr(),
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Spacer(),
-
-                                  Text(
-                                    "${state.projects.totalReceivedAmount} JD",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                      color:
-                                          state.projects.totalReceivedAmount > 0
-                                          ? ColorConst.positive
-                                          : ColorConst.error,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        ),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddProjectScreen(),
+                                ),
+                              );
+                              if (!context.mounted) return;
+                              if (result == true) {
+                                context.read<GetProjectsCubit>().getProjects(
+                                  pageSize: AppConst.defaultPageSize,
+                                  pageNumber: AppConst.defaultPageNumber,
+                                );
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add),
+                                Text('add project'.tr()),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      Container(
-                        height: 100,
-                        width: size.width,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
                         ),
+                      ],
+                    ),
+                  ),
+                )
+              : Stack(
+            fit: StackFit.expand,
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 20,
                           children: [
-                            Text(
-                              'totalBalance'.tr(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Spacer(),
-
-                            Text(
-                              "${state.projects.totalBalance} JD",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                                color: state.projects.totalBalance > 0
-                                    ? ColorConst.textDark
-                                    : ColorConst.error,
+                            HiasbTextField(
+                              controller: searchController,
+                              hint: 'search'.tr(),
+                              onChange: (value) {
+                                context.read<GetProjectsCubit>().searchProjects(
+                                  value,
+                                );
+                              },
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: ColorConst.neutral,
+                                size: 20,
                               ),
+                              obscureText: false,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'totalBalance'.tr(),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    _formatAmount(state.projects.totalBalance),
+                                    style: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Divider(
+                                    color: Colors.white24,
+                                    height: 1,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: _summaryItem(
+                                          'totalPaidAmount'.tr(),
+                                          state.projects.totalPaidAmount,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: _summaryItem(
+                                          'totalReceivedAmount'.tr(),
+                                          state.projects.totalReceivedAmount,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.projects.projects.length,
+                              itemBuilder: (context, index) {
+                                final project = state.projects.projects[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: Material(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(20),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                GetProjectByIdScreen(
+                                                  projectId: project.projectId,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    project.description,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      height: 1.4,
+                                                      color:
+                                                          ColorConst.textDark,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 4,
+                                                      ),
+                                                  decoration: BoxDecoration(
+                                                    color: ColorConst.positive
+                                                        .withValues(alpha: 0.1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                  ),
+                                                  child: Text(
+                                                    '#${project.projectNumber}',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          ColorConst.positive,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: _cardStat(
+                                                    'paid'.tr(),
+                                                    project.paidAmount,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: _cardStat(
+                                                    'received'.tr(),
+                                                    project.receivedAmount,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 12),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: _cardStat(
+                                                    'balance'.tr(),
+                                                    project.balance,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: _cardStat(
+                                                    'wallet'.tr(),
+                                                    project.walletAmount,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Container(
+                                              width: double.infinity,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 12,
+                                                    vertical: 10,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: ColorConst.neutral
+                                                    .withValues(alpha: 0.08),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    'remaining balance'.tr(),
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: ColorConst.neutral,
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  Text(
+                                                    _formatAmount(
+                                                      project.remainingAmount,
+                                                    ),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 16,
+
+                                                      color:
+                                                          project.remainingAmount <
+                                                              0
+                                                          ? ColorConst.error
+                                                          : ColorConst.textDark,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: state.projects.projects.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GetProjectByIdScreen(
-                                    projectId: state
-                                        .projects
-                                        .projects[index]
-                                        .projectId,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    spacing: 5,
-                                    children: [
-                                      Icon(
-                                        Icons.tag_outlined,
-                                        color: ColorConst.positive,
-                                        size: 20,
-                                      ),
-                                      Text(
-                                        state
-                                            .projects
-                                            .projects[index]
-                                            .projectNumber
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color: ColorConst.positive,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    state.projects.projects[index].description,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorConst.textDark,
-                                    ),
-                                  ),
-                                  Divider(),
-                                  Row(
-                                    spacing: 10,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'paid'.tr(),
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              '${state.projects.projects[index].paidAmount} JD',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color:
-                                                    state
-                                                            .projects
-                                                            .projects[index]
-                                                            .paidAmount >
-                                                        0
-                                                    ? ColorConst.textDark
-                                                    : ColorConst.error,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'received'.tr(),
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              '${state.projects.projects[index].receivedAmount} JD',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color:
-                                                    state
-                                                            .projects
-                                                            .projects[index]
-                                                            .receivedAmount >
-                                                        0
-                                                    ? ColorConst.textDark
-                                                    : ColorConst.error,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 10,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'balance'.tr(),
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              '${state.projects.projects[index].balance} JD',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color:
-                                                    state
-                                                            .projects
-                                                            .projects[index]
-                                                            .balance >
-                                                        0
-                                                    ? ColorConst.textDark
-                                                    : ColorConst.error,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'wallet'.tr(),
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              '${state.projects.projects[index].walletAmount} JD',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color:
-                                                    state
-                                                            .projects
-                                                            .projects[index]
-                                                            .walletAmount >
-                                                        0
-                                                    ? ColorConst.textDark
-                                                    : ColorConst.error,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'remaining balance'.tr(),
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        '${state.projects.projects[index].remainingAmount} JD',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color:
-                                              state
-                                                      .projects
-                                                      .projects[index]
-                                                      .remainingAmount >
-                                                  0
-                                              ? ColorConst.textDark
-                                              : ColorConst.error,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                    ),
+                    const SizedBox(height: 80),
+                    PositionedDirectional(
+                      bottom: 16,
+                      end: 16,
+
+                      child: FloatingActionButton(
+                        shape: CircleBorder(),
+                        child: Icon(Icons.add),
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddProjectScreen(),
                             ),
                           );
+                          if (result == true) {
+                            context.read<GetProjectsCubit>().getProjects(
+                              pageSize: AppConst.defaultPageSize,
+                              pageNumber: AppConst.defaultPageNumber,
+                            );
+                          }
                         },
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                right: 10,
-
-                child: FloatingActionButton(
-                  shape: CircleBorder(),
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    final result = Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddProjectScreen(),
-                      ),
-                    );
-                    if (result == true) {
-                      context.read<GetProjectsCubit>().getProjects(
-                        pageSize: 10,
-                        pageNumber: 1,
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          );
+                    ),
+                  ],
+                );
         } else {
           return Center(child: CircularProgressIndicator());
         }

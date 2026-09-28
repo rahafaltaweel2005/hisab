@@ -37,7 +37,7 @@ class GetProjectsCubit extends Cubit<GetProjectsState> {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       getProjects(
-        pageNumber: 1,
+        pageNumber: AppConst.defaultPageNumber,
         pageSize: AppConst.defaultPageSize,
         search: query.trim().isEmpty ? null : query.trim(),
       );

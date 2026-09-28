@@ -9,7 +9,7 @@ class AddProjectCubit extends Cubit<AddProjectState> {
   AddProjectCubit({required this.addProjectUseCase})
     : super(AddProjectInitialState());
 
-  Future<void> appProject({
+  Future<void> addProject({
     required int projectNumber,
     required String description,
     required double paidAmount,
