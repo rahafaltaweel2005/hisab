@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('hiasb'.tr()),
+            Text('hisab'.tr()),
             Text(
               "financial project management".tr(),
               style: TextStyle(

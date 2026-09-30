@@ -79,32 +79,6 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
     );
   }
 
-  void _confirmDelete() {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('delete project'.tr()),
-        content: Text('are you sure you want to delete this project?'.tr()),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text('cancel'.tr()),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: ColorConst.error),
-            onPressed: () {
-              context.read<DeleteProjectCubit>().deleteProject(
-                projectId: widget.projectId,
-              );
-            },
-            child: Text('delete'.tr()),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +86,11 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
       body: BlocListener<DeleteProjectCubit, DeleteProjectState>(
         listener: (context, state) {
           if (state is DeleteProjectSuccessState) {
+            context.read<GetProjectsCubit>().getProjects(
+              pageNumber: AppConst.defaultPageNumber,
+              pageSize: AppConst.defaultPageSize,
+            );
+
             Navigator.pop(context);
             Navigator.pop(context, true);
           }
@@ -324,10 +303,60 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                             ),
                           ),
                         ),
+
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              _confirmDelete;
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    title: Text('delete project'.tr()),
+                                    content: Text(
+                                      'are you sure you want to delete this project?'
+                                          .tr(),
+                                    ),
+                                    actions: [
+                                      Row(
+                                        spacing: 10,
+                                        children: [
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('cancel'.tr()),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<DeleteProjectCubit>()
+                                                    .deleteProject(
+                                                  projectId: widget.projectId,
+                                                );
+                                              },
+                                              style: ButtonStyle(
+                                                backgroundColor: WidgetStateProperty.all(
+                                                  Colors.white,
+                                                ),
+                                                iconColor: WidgetStateProperty.all(
+                                                  ColorConst.error,
+                                                ),
+                                                side: WidgetStateProperty.all(
+                                                  BorderSide(color: ColorConst.error, width: 1),
+                                                ),
+                                              ),
+                                              child: Text('delete'.tr() , style:  TextStyle(color: ColorConst.error),),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
@@ -341,8 +370,6 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                               ),
                             ),
                             child: Row(
-                              spacing: 5,
-
                               mainAxisAlignment: MainAxisAlignment.center,
 
                               children: [

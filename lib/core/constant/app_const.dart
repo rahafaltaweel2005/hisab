@@ -15,5 +15,4 @@ class AppConst {
   static const String accessTokenKey = 'access_token';
   static const String tokenExpiryKey = 'token_expiry';
 
-  static const String appName = 'Hisab';
 }

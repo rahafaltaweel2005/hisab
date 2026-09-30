@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constant/app_spacing.dart';
 
-class HiasbTextField extends StatelessWidget {
+class HisabTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? title;
   final String hint;
@@ -13,7 +13,7 @@ class HiasbTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
-  const HiasbTextField({
+  const HisabTextField({
     super.key,
     required this.controller,
     this.title,

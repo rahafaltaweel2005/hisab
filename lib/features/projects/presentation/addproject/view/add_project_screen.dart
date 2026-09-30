@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hiasb_app/core/constant/color_const.dart';
-import 'package:hiasb_app/core/textfield/hiasb_text_field.dart';
+import 'package:hiasb_app/core/textfield/hisab_text_field.dart';
 import 'package:hiasb_app/features/projects/presentation/addproject/cubit/add_project_cubit.dart';
 
 import '../state/add_project_state.dart';
@@ -136,7 +136,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "project number".tr(),
 
                             controller: numProjectController,
@@ -213,7 +213,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "paid amount".tr(),
                             controller: paidAmountController,
                             hint: "0.0 JD",
@@ -224,7 +224,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "received amount".tr(),
                             controller: receivedAmountController,
                             hint: "0.0 JD",
@@ -235,7 +235,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "wallet balance".tr(),
                             controller: walletBalanceController,
                             hint: "0.0 JD",

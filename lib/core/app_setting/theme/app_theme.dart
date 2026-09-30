@@ -55,20 +55,11 @@ class AppTheme {
         color: ColorConst.textDark,
       ),
 
-      bodyLarge: TextStyle(
-        fontSize: 16,
-        color: ColorConst.textDark,
-      ),
+      bodyLarge: TextStyle(fontSize: 16, color: ColorConst.textDark),
 
-      bodyMedium: TextStyle(
-        fontSize: 14,
-        color: ColorConst.neutral,
-      ),
+      bodyMedium: TextStyle(fontSize: 14, color: ColorConst.neutral),
 
-      bodySmall: TextStyle(
-        fontSize: 12,
-        color: ColorConst.neutral,
-      ),
+      bodySmall: TextStyle(fontSize: 12, color: ColorConst.neutral),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
@@ -78,46 +69,31 @@ class AppTheme {
         color: ColorConst.neutral.withValues(alpha: 0.55),
         fontWeight: FontWeight.w400,
       ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: const BorderSide(
-          color: ColorConst.border,
-        ),
+        borderSide: const BorderSide(color: ColorConst.border),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: const BorderSide(
-          color: ColorConst.border,
-        ),
+        borderSide: const BorderSide(color: ColorConst.border),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: const BorderSide(
-          color: ColorConst.primary,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: ColorConst.primary, width: 1.5),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: const BorderSide(
-          color: ColorConst.error,
-        ),
+        borderSide: const BorderSide(color: ColorConst.error),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: const BorderSide(
-          color: ColorConst.error,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: ColorConst.error, width: 1.5),
       ),
     ),
 
@@ -133,10 +109,7 @@ class AppTheme {
 
         elevation: 0,
 
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
     ),
 
@@ -144,10 +117,7 @@ class AppTheme {
       style: TextButton.styleFrom(
         foregroundColor: ColorConst.primary,
 
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
       ),
     ),
 
@@ -158,9 +128,7 @@ class AppTheme {
 
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: const BorderSide(
-          color: ColorConst.border,
-        ),
+        side: const BorderSide(color: ColorConst.border),
       ),
     ),
 

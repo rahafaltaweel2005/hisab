@@ -6,7 +6,7 @@ import 'package:hiasb_app/core/constant/color_const.dart';
 import 'package:hiasb_app/core/constant/svg_const.dart';
 import 'package:hiasb_app/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:hiasb_app/features/auth/presentation/register/state/register_state.dart';
-import '../../../../../core/textfield/hiasb_text_field.dart';
+import '../../../../../core/textfield/hisab_text_field.dart';
 import '../../../../core/constant/app_spacing.dart';
 import '../../../home/presentation/view/home_screen.dart';
 import '../login/cubit/login_cubit.dart';
@@ -47,7 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            HiasbTextField(
+            HisabTextField(
               controller: displayNameController,
               title: 'full name'.tr(),
               hint: 'Mohammad'.tr(),
@@ -59,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
               obscureText: false,
             ),
             const SizedBox(height: AppSpacing.md),
-            HiasbTextField(
+            HisabTextField(
               controller: emailController,
               title: 'email'.tr(),
               hint: 'name@company.com'.tr(),
@@ -71,7 +71,7 @@ class _AuthScreenState extends State<AuthScreen> {
               obscureText: false,
             ),
             const SizedBox(height: AppSpacing.md),
-            HiasbTextField(
+            HisabTextField(
               controller: passwordController,
               title: 'password'.tr(),
               hint: '••••••••',
@@ -134,7 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            HiasbTextField(
+            HisabTextField(
               controller: emailController,
               title: 'email'.tr(),
               hint: 'name@company.com'.tr(),
@@ -146,7 +146,7 @@ class _AuthScreenState extends State<AuthScreen> {
               obscureText: false,
             ),
            const SizedBox(height: AppSpacing.md),
-            HiasbTextField(
+            HisabTextField(
               controller: passwordController,
               title: 'password'.tr(),
               hint: '••••••••',
@@ -225,7 +225,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
-                "hiasb".tr(),
+                "hisab".tr(),
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w900,

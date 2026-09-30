@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// نظام الألوان الخاص بتطبيق Hisab.
+/// نظام الألوان الخاص بتطبيق hisab.
 class ColorConst {
   ColorConst._();
 

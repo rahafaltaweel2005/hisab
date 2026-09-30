@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiasb_app/features/projects/domain/entity/project_entity.dart';
 
 import '../../../../../core/constant/color_const.dart';
-import '../../../../../core/textfield/hiasb_text_field.dart';
+import '../../../../../core/textfield/hisab_text_field.dart';
 import '../cubit/update_project_cubit.dart';
 import '../state/update_project_state.dart';
 
@@ -154,7 +154,7 @@ class _UpdateProjectScreenState extends State<UpdateProjectScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "project number".tr(),
                 
                             controller: numProjectController,
@@ -230,7 +230,7 @@ class _UpdateProjectScreenState extends State<UpdateProjectScreen> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "paid amount".tr(),
                             controller: paidAmountController,
                             hint: "0.0 JD",
@@ -239,7 +239,7 @@ class _UpdateProjectScreenState extends State<UpdateProjectScreen> {
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "received amount".tr(),
                             controller: receivedAmountController,
                             hint: "0.0 JD",
@@ -247,7 +247,7 @@ class _UpdateProjectScreenState extends State<UpdateProjectScreen> {
                             validator: _validateAmount,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),                          ),
                           SizedBox(height: 10),
-                          HiasbTextField(
+                          HisabTextField(
                             title: "wallet balance".tr(),
                             controller: walletBalanceController,
                             hint: "0.0 JD",

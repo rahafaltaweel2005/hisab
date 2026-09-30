@@ -6,7 +6,7 @@ import 'package:hiasb_app/features/projects/presentation/addproject/view/add_pro
 import 'package:hiasb_app/features/projects/presentation/getprojectbyid/view/get_project_by_id_screen.dart';
 
 import '../../../../../core/constant/app_const.dart';
-import '../../../../../core/textfield/hiasb_text_field.dart';
+import '../../../../../core/textfield/hisab_text_field.dart';
 import '../cubit/get_projects_cubit.dart';
 import '../state/get_projects_state.dart';
 
@@ -110,7 +110,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'insert your first project'.tr(),
+                          'add your first project'.tr(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -173,7 +173,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                         child: Column(
                           spacing: 20,
                           children: [
-                            HiasbTextField(
+                            HisabTextField(
                               controller: searchController,
                               hint: 'search'.tr(),
                               onChange: (value) {

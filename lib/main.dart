@@ -102,9 +102,7 @@ Future<void> main() async {
       fallbackLocale: const Locale('en'),
       startLocale: const Locale('ar'),
       child: MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider.value(value: updateProjectUseCase),
-        ],
+        providers: [RepositoryProvider.value(value: updateProjectUseCase)],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -131,8 +129,9 @@ Future<void> main() async {
               ),
             ),
             BlocProvider(
-              create: (_) =>
-                  DeleteProjectCubit(deleteProjectUseCase: deleteProjectUseCase),
+              create: (_) => DeleteProjectCubit(
+                deleteProjectUseCase: deleteProjectUseCase,
+              ),
             ),
           ],
           child: MyApp(isLoggedIn: isLoggedIn),
@@ -151,7 +150,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Hisab',
+      title: 'hisab'.tr(),
       theme: AppTheme.lightTheme,
       localizationsDelegates: context.localizationDelegates,
 
