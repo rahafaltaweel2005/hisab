@@ -25,7 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return BlocListener<LogoutCubit, LogoutState>(
       listener: (context, state) {
         if (state is LogoutSuccessState) {
@@ -53,123 +52,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * 0.8,
-                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
-                      color: Color(0xFFFFFFFF),
                     ),
-                    child: Row(
-                      spacing: 20,
+                    child: Column(
                       children: [
-                        Container(
-                          width: size.width * 0.1,
-                          height: size.height * 0.05,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorConst.surfaceLight,
-                          ),
-                          child: Icon(Icons.tag_outlined, size: 30),
-                        ),
-                        Expanded(
-                          child: Column(
-                            spacing: 7,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('id'.tr()),
-                              Text(
-                                state.user.id,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: ColorConst.textDark,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Container(
-                    width: size.width * 0.8,
-                    height: size.height * 0.1,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xFFFFFFFF),
-                    ),
-                    child: Row(
-                      spacing: 20,
-                      children: [
-                        Container(
-                          width: size.width * 0.1,
-                          height: size.height * 0.05,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorConst.surfaceLight,
-                          ),
-                          child: Icon(Icons.badge_outlined, size: 30),
-                        ),
-                        Column(
-                          spacing: 7,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('name'.tr()),
-                            Text(
-                              state.user.displayName,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: ColorConst.textDark,
-                                decoration: TextDecoration.none,
-                              ),
+                        CircleAvatar(
+                          radius: 36,
+                          backgroundColor: ColorConst.primary,
+                          child: Text(
+                            state.user.displayName.isNotEmpty
+                                ? state.user.displayName[0].toUpperCase()
+                                : '?',
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Container(
-                    width: size.width * 0.8,
-                    height: size.height * 0.1,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xFFFFFFFF),
-                    ),
-                    child: Row(
-                      spacing: 20,
-                      children: [
-                        Container(
-                          width: size.width * 0.1,
-                          height: size.height * 0.05,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorConst.surfaceLight,
                           ),
-                          child: Icon(Icons.email_outlined, size: 30),
                         ),
-                        Column(
-                          spacing: 7,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('email'.tr()),
-                            Text(
-                              state.user.email,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: ColorConst.textDark,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                          ],
+                        const SizedBox(height: 16),
+                        Text(
+                          state.user.displayName,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: ColorConst.textDark,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          state.user.email,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                          ),
                         ),
                       ],
                     ),
@@ -177,7 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Spacer(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorConst.negative,
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                      shape: RoundedRectangleBorder(
+
+                        borderRadius: BorderRadius.circular(15),
+                        side: BorderSide(
+                          color: ColorConst.error,
+                          width: 1,
+                        ),
+                      ),
                     ),
                     onPressed: () {
                       context.read<LogoutCubit>().logout();
@@ -194,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: TextDecoration.none,
                           ),
                         ),
-                        SizedBox(width: size.width * 0.02),
+                         const SizedBox(width: 2),
                         Icon(Icons.logout_outlined, color: ColorConst.error),
                       ],
                     ),
