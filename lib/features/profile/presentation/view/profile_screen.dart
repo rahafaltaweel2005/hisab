@@ -28,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocListener<LogoutCubit, LogoutState>(
       listener: (context, state) {
         if (state is LogoutSuccessState) {
+          Navigator.pop(context);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => AuthScreen()),
@@ -97,18 +98,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Spacer(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).scaffoldBackgroundColor,
                       shape: RoundedRectangleBorder(
-
                         borderRadius: BorderRadius.circular(15),
-                        side: BorderSide(
-                          color: ColorConst.error,
-                          width: 1,
-                        ),
+                        side: BorderSide(color: ColorConst.error, width: 1),
                       ),
                     ),
                     onPressed: () {
-                      context.read<LogoutCubit>().logout();
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: Text('logout'.tr()),
+                            content: Text(
+                              'are you sure you want to logout'.tr(),
+                            ),
+                            actions: [
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('cancel'.tr()),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        context.read<LogoutCubit>().logout();
+                                      },
+
+                                      child: Text(
+                                        'logout'.tr(),
+                                        style: TextStyle(
+                                          color: ColorConst.error,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: TextDecoration.none,
                           ),
                         ),
-                         const SizedBox(width: 2),
+                        const SizedBox(width: 2),
                         Icon(Icons.logout_outlined, color: ColorConst.error),
                       ],
                     ),

@@ -55,14 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
             currentPage = index;
           });
         },
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.wallet_outlined),
-            label: 'Projects',
+            icon: const Icon(Icons.wallet_outlined),
+            label: 'projects'.tr(),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
+           BottomNavigationBarItem(
+            icon: const Icon(Icons.person_2_outlined),
+            label: 'profile'.tr(),
           ),
         ],
       ),
