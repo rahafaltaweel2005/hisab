@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/constant/app_const.dart';
 import '../../../../../core/constant/color_const.dart';
+import '../../../../../core/utils/currency_formatter.dart';
 import '../../../domain/usecase/update_project_use_case.dart';
 import '../../deleteproject/cubit/delete_project_cubit.dart';
 import '../../deleteproject/state/delete_project_state.dart';
@@ -31,9 +31,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
     super.initState();
   }
 
-  String _formatAmount(num value) {
-    return '${NumberFormat('#,##0.##').format(value)} JD';
-  }
+
 
 
   Widget _cardStat(String label, num value) {
@@ -43,7 +41,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
         Text(label, style: TextStyle(fontSize: 12, color: ColorConst.neutral)),
         const SizedBox(height: 2),
         Text(
-          _formatAmount(value),
+          CurrencyFormatter.format(value),
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -116,47 +114,6 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                   children: [
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorConst.positive.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              "#${state.project.projectNumber}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: ColorConst.positive,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            state.project.description,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              height: 1.5,
-                              color: ColorConst.textDark,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
@@ -165,6 +122,41 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Text(
+                                state.project.description,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.5,
+                                  color: Colors.white,
+                                ),
+
+                              ),
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  "#${state.project.projectNumber}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+
                           Text(
                             "remaining balance".tr(),
                             style: TextStyle(
@@ -174,7 +166,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            _formatAmount(state.project.remainingAmount),
+                            CurrencyFormatter.format(state.project.remainingAmount),
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
@@ -321,7 +313,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                                         spacing: 10,
                                         children: [
                                           Expanded(
-                                            child: ElevatedButton(
+                                            child: TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
@@ -329,7 +321,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                                             ),
                                           ),
                                           Expanded(
-                                            child: ElevatedButton(
+                                            child: TextButton(
                                               onPressed: () {
                                                 context
                                                     .read<DeleteProjectCubit>()
@@ -337,17 +329,7 @@ class _GetProjectByIdScreenState extends State<GetProjectByIdScreen> {
                                                   projectId: widget.projectId,
                                                 );
                                               },
-                                              style: ButtonStyle(
-                                                backgroundColor: WidgetStateProperty.all(
-                                                  Colors.white,
-                                                ),
-                                                iconColor: WidgetStateProperty.all(
-                                                  ColorConst.error,
-                                                ),
-                                                side: WidgetStateProperty.all(
-                                                  BorderSide(color: ColorConst.error, width: 1),
-                                                ),
-                                              ),
+
                                               child: Text('delete'.tr() , style:  TextStyle(color: ColorConst.error),),
                                             ),
                                           ),

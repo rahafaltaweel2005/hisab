@@ -5,8 +5,8 @@ import 'package:hiasb_app/core/constant/color_const.dart';
 import 'package:hiasb_app/features/projects/presentation/addproject/view/add_project_screen.dart';
 import 'package:hiasb_app/features/projects/presentation/getprojectbyid/view/get_project_by_id_screen.dart';
 
-import '../../../../../core/constant/app_const.dart';
 import '../../../../../core/textfield/hisab_text_field.dart';
+import '../../../../../core/utils/currency_formatter.dart';
 import '../cubit/get_projects_cubit.dart';
 import '../state/get_projects_state.dart';
 
@@ -24,10 +24,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
 
   @override
   void initState() {
-    context.read<GetProjectsCubit>().getProjects(
-      pageSize: AppConst.defaultPageSize,
-      pageNumber: AppConst.defaultPageNumber,
-    );
+    context.read<GetProjectsCubit>().getProjects();
     super.initState();
   }
 
@@ -45,7 +42,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
         ),
         const SizedBox(height: 4),
         Text(
-          _formatAmount(value),
+          CurrencyFormatter.format(value),
           style: const TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
@@ -63,7 +60,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
         Text(label, style: TextStyle(fontSize: 12, color: ColorConst.neutral)),
         const SizedBox(height: 2),
         Text(
-          _formatAmount(value),
+          CurrencyFormatter.format(value),
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -145,10 +142,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                               );
                               if (!context.mounted) return;
                               if (result == true) {
-                                context.read<GetProjectsCubit>().getProjects(
-                                  pageSize: AppConst.defaultPageSize,
-                                  pageNumber: AppConst.defaultPageNumber,
-                                );
+                                context.read<GetProjectsCubit>().getProjects();
                               }
                             },
                             child: Row(
@@ -188,6 +182,29 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                               ),
                               obscureText: false,
                             ),
+                            if (state.projects.projects.isEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 40),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.search_off_rounded,
+                                      size: 44,
+                                      color: ColorConst.neutral,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      'no results'.tr(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: ColorConst.neutral,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            else ...[
                             Container(
                               width: double.infinity,
                               padding: const EdgeInsets.all(20),
@@ -378,7 +395,7 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                                                   ),
                                                   const Spacer(),
                                                   Text(
-                                                    _formatAmount(
+                                                    CurrencyFormatter.format(
                                                       project.remainingAmount,
                                                     ),
                                                     style: TextStyle(
@@ -403,7 +420,9 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                                   ),
                                 );
                               },
+                              padding: const EdgeInsets.only(bottom: 10),
                             ),
+                            ],
                           ],
                         ),
                       ),
