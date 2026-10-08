@@ -7,6 +7,7 @@ import 'package:hiasb_app/features/projects/presentation/getprojectbyid/view/get
 
 import '../../../../../core/textfield/hisab_text_field.dart';
 import '../../../../../core/utils/currency_formatter.dart';
+import '../../../../../core/utils/excel_helper.dart';
 import '../cubit/get_projects_cubit.dart';
 import '../state/get_projects_state.dart';
 
@@ -167,20 +168,32 @@ class _GetProjectsScreenState extends State<GetProjectsScreen> {
                         child: Column(
                           spacing: 20,
                           children: [
-                            HisabTextField(
-                              controller: searchController,
-                              hint: 'search'.tr(),
-                              onChange: (value) {
-                                context.read<GetProjectsCubit>().searchProjects(
-                                  value,
-                                );
-                              },
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: ColorConst.neutral,
-                                size: 20,
-                              ),
-                              obscureText: false,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: HisabTextField(
+                                    controller: searchController,
+                                    hint: 'search'.tr(),
+                                    onChange: (value) {
+                                      context.read<GetProjectsCubit>().searchProjects(
+                                        value,
+                                      );
+                                    },
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: ColorConst.neutral,
+                                      size: 20,
+                                    ),
+                                    obscureText: false,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.description_outlined),
+                                  onPressed: () async{
+                                    await ExcelHelper().createExcelFile(state.projects.projects);
+                                  },
+                                )
+                              ],
                             ),
                             if (state.projects.projects.isEmpty)
                               Padding(

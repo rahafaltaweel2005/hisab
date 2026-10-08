@@ -10,6 +10,7 @@
   "password": "كلمة المرور",
   "create account": "إنشاء حساب",
   "profile": "الملف الشخصي",
+  "projects": "المشاريع",
   "logout": "تسجيل الخروج",
   "id": "الرقم التعريفي",
   "no data": "لا توجد بيانات",
@@ -53,5 +54,7 @@
   "required field": "حقل مطلوب",
   "enter a valid number": "أدخل رقماً صحيحاً",
   "enter a valid amount": "أدخل مبلغاً صحيحاً",
-  "amount cannot be negative": "لا يمكن أن يكون المبلغ سالباً"
+  "amount cannot be negative": "لا يمكن أن يكون المبلغ سالباً",
+  "are you sure you want to logout" : "هل أنت متأكد من تسجيل الخروج؟",
+  "no results": "لا توجد نتائج"
 }

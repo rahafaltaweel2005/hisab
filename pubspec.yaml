@@ -40,6 +40,9 @@ dependencies:
   flutter_bloc: ^9.1.1
   translator: ^1.0.4+1
   easy_localization: ^3.0.8
+  syncfusion_flutter_xlsio: ^33.2.13
+  path_provider: ^2.1.6
+  open_file: ^4.0.0
 
 dev_dependencies:
   flutter_test:

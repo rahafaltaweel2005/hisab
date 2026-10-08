@@ -6,6 +6,8 @@
   "full name": "Full Name",
   "Mohammad": "Mohammad",
   "email": "Email",
+  "projects": "Projects",
+  "are you sure you want to logout" : "Are you sure you want to logout?",
   "name@company.com": "name@company.com",
   "password": "Password",
   "create account": "Create Account",
@@ -53,6 +55,7 @@
   "required field": "Required field",
   "enter a valid number": "Enter a valid number",
   "enter a valid amount": "Enter a valid amount",
-  "amount cannot be negative": "Amount cannot be negative"
+  "amount cannot be negative": "Amount cannot be negative",
+  "no results": "No results found"
 }
 
