@@ -25,7 +25,7 @@ The app provides project management, financial summaries, Arabic and English loc
 
 - **Framework:** Flutter
 - **Language:** Dart
-- **Architecture:** Clean Architecture
+- **Architecture:** Clean Architecture (feature-first)
 - **State Management:** Cubit (`flutter_bloc`)
 - **API Integration:** Dio
 - **Secure Storage:** `flutter_secure_storage`
@@ -34,7 +34,37 @@ The app provides project management, financial summaries, Arabic and English loc
 
 ## Architecture
 
-The application follows Clean Architecture principles to separate presentation, domain, and data responsibilities. This keeps the code organized and makes individual features easier to maintain and extend.
+The app follows Clean Architecture with a feature-first structure. Each feature (`auth`, `home`, `profile`, `projects`) is split into three layers:
+
+- **Data:** remote data sources (Dio), models, and repository implementations.
+- **Domain:** repository contracts and use cases. This layer has no dependency on Dio or any UI code.
+- **Presentation:** Cubit, states, and screens.
+
+```
+lib/
+├── features/
+│   ├── auth/
+│   ├── home/
+│   ├── profile/
+│   │   ├── data/
+│   │   │   ├── datasource/
+│   │   │   ├── models/
+│   │   │   └── repository/
+│   │   ├── domain/
+│   │   │   ├── repository/
+│   │   │   └── usecase/
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       ├── state/
+│   │       └── view/
+│   └── projects/
+│       ├── data/
+│       ├── domain/
+│       └── presentation/
+└── main.dart
+```
+
+Data flows in one direction: **View → Cubit → Use Case → Repository (contract) → Repository implementation → Remote data source (Dio)**. Because the domain layer only depends on the repository contract, the data source can change without touching the business logic or the UI.
 
 ## Getting Started
 
@@ -70,7 +100,7 @@ The application follows Clean Architecture principles to separate presentation, 
 
 ## Excel Export
 
-Hisab uses Syncfusion Flutter XlsIO to generate Excel workbooks from project data. The export organizes project information into spreadsheet columns and applies formatting to improve readability, including column sizing.
+Hisab uses Syncfusion Flutter XlsIO to generate Excel workbooks from project data. The export organizes project information into spreadsheet columns and applies formatting to improve readability, including column sizing. The file is saved with `path_provider` and opened with `open_file`.
 
 ## Author
 
