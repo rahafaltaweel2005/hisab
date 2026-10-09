@@ -1,12 +1,12 @@
 # Hisab
 
-A Flutter app for managing projects and tracking their financial details: paid amounts, received amounts, wallet amounts, and balances.
+A Flutter app for managing projects and tracking their financial details in one place: paid amounts, received amounts, wallet amounts, and remaining balances.
 
 ## Screenshots
 
-| Home | Project details | Excel export |
+| Home | Project Details | Excel Export |
 |------|-----------------|--------------|
-| ![Home](screenshots/home.png) | ![Details](screenshots/details.png) | ![Excel](screenshots/excel.png) |
+| ![Home](screenshots/home.png) | ![Project Details](screenshots/details.png) | ![Excel Export](screenshots/excel.png) |
 
 ## Features
 
@@ -31,10 +31,14 @@ A Flutter app for managing projects and tracking their financial details: paid a
 
 ## Getting Started
 
-1. Clone the repo: `git clone https://github.com/rahafaltaweel2005/hisab.git`
-2. Run `flutter pub get`
-3. Run `flutter run`
+```bash
+git clone https://github.com/rahafaltaweel2005/hisab.git
+cd hisab
+flutter pub get
+flutter run
+```
 
 ## Author
 
-Rahaf Altaweel
+Rahaf Altaweel  
+GitHub: [rahafaltaweel2005](https://github.com/rahafaltaweel2005)
